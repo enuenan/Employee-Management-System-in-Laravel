@@ -27,7 +27,7 @@ class EmployeeController extends Controller
     public function create() {
         $data = [
             'departments' => Department::all(),
-            'desgs' => ['Manager', 'Assistant Manager', 'Deputy Manager', 'Clerk']
+            'desgs' => ['Data entry executive', 'Data entry team lead', '3d artist', 'Web Developer']
         ];
         return view('admin.employees.create')->with($data);
     }
@@ -39,14 +39,15 @@ class EmployeeController extends Controller
             'sex' => 'required',
             'desg' => 'required',
             'department_id' => 'required',
-            'salary' => 'required|numeric',
             'email' => 'required|email',
+            'contact' => 'nullable|numeric|digits:11',
             'photo' => 'image|nullable',
             'password' => 'required|confirmed|min:6'
         ]);
         $user = User::create([
             'name' => $request->first_name.' '.$request->last_name,
             'email' => $request->email,
+            'contact' => $request->contact,
             'password' => Hash::make($request->password)
         ]);
         $employeeRole = Role::where('name', 'employee')->first();
@@ -60,7 +61,6 @@ class EmployeeController extends Controller
             'join_date' => $request->join_date,
             'desg' => $request->desg, 
             'department_id' => $request->department_id, 
-            'salary' => $request->salary, 
             'photo'  => 'user.png'
         ];
         // Photo upload

@@ -30,8 +30,8 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-      <row class="">
+    <div class="container-fluid d-flex justify-content-center">
+      {{-- <row class="">
         <div class="col-md-8 mx-auto">
           <div class="jumbotron">
             <h1 class="display-4 text-primary">Welcome to EAMS</h1>
@@ -46,7 +46,8 @@
             </p>
           </div>
         </div>
-      </row>
+      </row> --}}
+      <img src="{{ asset('img/Company-amico.svg') }}" alt="" srcset="" width="50%">
     </div>
     <!-- /.container-fluid -->
 </section>

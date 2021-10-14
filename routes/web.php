@@ -95,7 +95,7 @@ Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(
 
     // Routes for Self //
     Route::get('/self/holidays', 'SelfController@holidays')->name('self.holidays');
-    Route::get('/self/salary_slip', 'SelfController@salary_slip')->name('self.salary_slip');
-    Route::get('/self/salary_slip_print', 'SelfController@salary_slip_print')->name('self.salary_slip_print');
+    // Route::get('/self/salary_slip', 'SelfController@salary_slip')->name('self.salary_slip');
+    // Route::get('/self/salary_slip_print', 'SelfController@salary_slip_print')->name('self.salary_slip_print');
     // Routes for Self //
 });

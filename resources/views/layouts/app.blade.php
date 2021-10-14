@@ -72,7 +72,7 @@
             {{-- If user is not logged in --}}
             @yield('content')
         @else
-        <body class="hold-transition sidebar-mini layout-fixed">
+        <body class="hold-transition sidebar-mini layout-fixed accent-lightblue">
 
             <div class="wrapper">
                 {{-- navbar include --}}

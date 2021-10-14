@@ -32,7 +32,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4 mx-auto">
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <h5 class="text-center">Attendance Date</h5>
                     </div>
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 @include('messages.alerts')
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <div class="card-title text-center">
                             @if ($date)

@@ -9,7 +9,7 @@
                 <h1 class="m-0 text-dark">List Employees</h1>
             </div>
             <!-- /.col -->
-            <div class="col-sm-6">
+            <div class="col-sm-6 col-md-5">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item">
                         <a href="{{ route('admin.index') }}">Admin Dashboard</a>
@@ -32,8 +32,8 @@
     <div class="container-fluid">
         @include('messages.alerts')
         <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <div class="card card-primary">
+            <div class="col-lg-10 mx-auto">
+                <div class="card card-info">
                     <div class="card-header">
                         <div class="card-title text-center">
                             Employees
@@ -50,7 +50,6 @@
                                     <th>Department</th>
                                     <th>Designation</th>
                                     <th>Join Date</th>
-                                    <th>Salary</th>
                                     <th class="none">Actions</th>
                                 </tr>
                             </thead>
@@ -62,7 +61,6 @@
                                     <td>{{ $employee->department->name }}</td>
                                     <td>{{ $employee->desg }}</td>
                                     <td>{{ $employee->join_date->format('d M, Y') }}</td>
-                                    <td>{{ $employee->salary }}</td>
                                     <td>
                                         <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">View Profile</a>
                                         <button 

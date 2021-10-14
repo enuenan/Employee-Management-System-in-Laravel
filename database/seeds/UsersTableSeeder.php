@@ -30,14 +30,16 @@ class UsersTableSeeder extends Seeder
 
         $admin = User::create([
             'name' => 'Admin User',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin')
+            'email' => 'admin@app.com',
+            'contact' => '01881974587',
+            'password' => Hash::make('password')
         ]);
 
         $employee = User::create([
-            'name' => 'Akashdeep Nandi',
-            'email' => 'akash@gmail.com',
-            'password' => Hash::make('akash')
+            'name' => 'Employee 1',
+            'email' => 'Employee@app.com',
+            'contact' => '01881984587',
+            'password' => Hash::make('password')
         ]);
 
         // 
@@ -53,14 +55,12 @@ class UsersTableSeeder extends Seeder
             'sex' => 'Male',
             'desg' => 'Manager',
             'department_id' => '1',
-            'join_date' => $join->format('Y-m-d'),
-            'salary' => 10520.75
+            'join_date' => $join->format('Y-m-d')
         ]);
 
-        Department::create(['name' => 'Marketing']);
-        Department::create(['name' => 'Sales']);
-        Department::create(['name' => 'Logistics']);
-        Department::create(['name' => 'Human Resources']);
+        Department::create(['name' => 'Data entry']);
+        Department::create(['name' => 'Design']);
+        Department::create(['name' => 'Development']);
 
         // Attendance seeder
         $create = Carbon::create(2020, 8, 17, 10, 00, 23, 'Asia/Kolkata');

@@ -34,7 +34,7 @@
                 <div class="col-lg-8 col-md-10 mx-auto">
                     <!-- general form elements -->
                     @include('messages.alerts')
-                    <div class="card card-primary">
+                    <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">List of leaves</h3>
                         </div>

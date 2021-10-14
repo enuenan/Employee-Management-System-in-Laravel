@@ -32,7 +32,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3 mx-auto">
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <h5 class="text-center">Reset Pasword</h5>
                     </div>

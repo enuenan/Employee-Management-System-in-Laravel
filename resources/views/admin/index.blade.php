@@ -30,17 +30,18 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid">
-        <row class="">
-        <div class="col-md-8 mx-auto">
-            <div class="jumbotron">
-            <h1 class="display-4 text-primary">Welcome to Admin Panel of EAMS</h1>
-            <p class="lead">This is employee management application used for handling to the statistics, visualizations and other various tabular work</p>
-            <hr class="my-4">
-            <p>Hope you like it</p>
+    <div class="container-fluid d-flex justify-content-center">
+        {{-- <row class="">
+            <div class="col-md-8 mx-auto">
+                <div class="jumbotron">
+                <h1 class="display-4 text-primary">Welcome to Admin Panel of EAMS</h1>
+                <p class="lead">This is employee management application used for handling to the statistics, visualizations and other various tabular work</p>
+                <hr class="my-4">
+                <p>Hope you like it</p>
+                </div>
             </div>
-        </div>
-        </row>
+        </row> --}}
+        <img src="{{ asset('img/Personal-settings-amico.svg') }}" alt="" srcset="" width="50%" class="bg-image">
     </div>
     <!-- /.container-fluid -->
 </section>

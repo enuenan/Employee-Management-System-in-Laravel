@@ -33,7 +33,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <h5 class="text-center mt-2">My Profile</h5>
                     </div>

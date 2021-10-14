@@ -33,7 +33,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 mx-auto">
-                <div class="card card-primary">
+                <div class="card card-info">
                     <div class="card-header">
                         <h5 class="text-center mt-2">My Profile</h5>
                     </div>
@@ -75,10 +75,6 @@
                             <tr>
                                 <td>Department</td>
                                 <td>{{ $employee->department->name }}</td>
-                            </tr>
-                            <tr>
-                                <td>Salary</td>
-                                <td>₹ {{ $employee->salary }}</td>
                             </tr>
                         </table>
                     </div>

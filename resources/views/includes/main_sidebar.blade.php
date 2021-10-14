@@ -1,5 +1,5 @@
 <!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style = "z-index: 1040 !important;">
+<aside class="main-sidebar elevation-4 sidebar-dark-lightblue" style="z-index: 1040 !important; background-color: #13293D !important;">
     <!-- Brand Logo -->
     <a 
     @can('admin-access')
@@ -8,14 +8,14 @@
     @can('employee-access')
         href="{{ route('employee.index') }}"
     @endcan
-    class="brand-link text-center">
+    class="brand-link text-center navbar-lightblue">
         {{-- <img
             src="/dist/img/AdminLTELogo.png"
             alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3"
             style="opacity: 0.8;"
         /> --}}
-        <span class="brand-text font-weight-light ">EAMS</span>
+        <span class="brand-text font-weight-light ">Dynamicflow</span>
     </a>
 
     <!-- Sidebar -->
@@ -46,7 +46,7 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul
-                class="nav nav-pills nav-sidebar flex-column"
+                class="nav nav-pills nav-sidebar flex-column nav-child-indent"
                 data-widget="treeview"
                 role="menu"
                 data-accordion="false"
@@ -54,8 +54,8 @@
                 @can('admin-access')
 
                 <li class="nav-item">
-                    <a href="pages/widgets.html" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <a href="{{ route('admin.index') }}" class="nav-link">
+                        <i class="fas fa-dna nav-icon"></i>
                         <p>
                                 Admin Dashboard
                             

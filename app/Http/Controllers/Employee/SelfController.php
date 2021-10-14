@@ -49,10 +49,10 @@ class SelfController extends Controller
         dd($path);
     }
 
-    public function salary_slip() {
-        return view('employee.self.salary');
-    }
-    public function salary_slip_print() {
-        return view('employee.self.salary-print');
-    }
+    // public function salary_slip() {
+    //     return view('employee.self.salary');
+    // }
+    // public function salary_slip_print() {
+    //     return view('employee.self.salary-print');
+    // }
 }

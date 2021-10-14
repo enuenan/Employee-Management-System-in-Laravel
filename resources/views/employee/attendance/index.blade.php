@@ -91,7 +91,7 @@
             </div>
             <div class="row">
                 <div class="col-lg mx-auto">
-                    <div class="card card-primary">
+                    <div class="card card-info">
                         <div class="card-header">
                             <div class="card-title text-center">
                                 Attendances
