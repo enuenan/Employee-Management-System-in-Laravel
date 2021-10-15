@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -41,9 +41,8 @@
                         @include('messages.alerts')
                         <div class="row mb-3">
                             <div class="col text-center mx-auto">
-                                <img src="/storage/employee_photos/{{ $employee->photo }}" class="rounded-circle img-fluid" alt=""
-                                style="box-shadow: 2px 4px rgba(0,0,0,0.1)"
-                                >
+                                <img src="{{ Storage::url($employee->image) }}" class="rounded-circle img-fluid w-50"
+                                    alt="" style="box-shadow: 2px 4px rgba(0,0,0,0.1)">
                             </div>
                         </div>
                         <table class="table profile-table table-hover">
@@ -63,7 +62,7 @@
                                 <td>Gender</td>
                                 <td>{{ $employee->sex }}</td>
                             </tr>
-                            
+
                             <tr>
                                 <td>Join Date</td>
                                 <td>{{ $employee->join_date->format('d M, Y') }}</td>
@@ -79,12 +78,12 @@
                         </table>
                     </div>
                     <div class="card-footer text-center" style="height: 2rem">
-                        
+
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>

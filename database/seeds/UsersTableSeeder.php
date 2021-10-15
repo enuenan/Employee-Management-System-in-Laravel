@@ -49,8 +49,8 @@ class UsersTableSeeder extends Seeder
         $admin->roles()->attach($adminRole);
         $employee = Employee::create([
             'user_id' => $employee->id,
-            'first_name' => 'Akashdeep',
-            'last_name' => 'Nandi',
+            'first_name' => 'Employee',
+            'last_name' => '1',
             'dob' => $dob->format('Y-m-d'),
             'sex' => 'Male',
             'desg' => 'Manager',

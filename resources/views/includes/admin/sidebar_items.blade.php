@@ -2,11 +2,13 @@
                                  {{ request()->is('admin/employees/list-employees')? 'menu-open':'' }}
                                  {{ request()->is('admin/employees/attendance')? 'menu-open':'' }}
                                  {{ request()->is('admin/employees/profile/*')? 'menu-open':'' }}
+                                 {{ request()->is('admin/employees/edit/*')? 'menu-open':'' }}
     ">
     <a href="#" class="nav-link {{ request()->is('admin/employees/add-employee')? 'active':'' }}
                                 {{ request()->is('admin/employees/list-employees')? 'active':'' }}
                                 {{ request()->is('admin/employees/attendance')? 'active':'' }}
                                 {{ request()->is('admin/employees/profile/*')? 'active':'' }}
+                                {{ request()->is('admin/employees/edit/*')? 'active':'' }}
         ">
         <i class="nav-icon fa fa-calendar-check-o"></i>
         <p>
@@ -28,8 +30,10 @@
         <li class="nav-item">
             <a
                 href="{{ route('admin.employees.index') }}"
-                class="nav-link {{ request()->is('admin/employees/list-employees')? 'active':'' }}"
-            >
+                class="nav-link {{ request()->is('admin/employees/list-employees')? 'active':'' }} 
+                                {{ request()->is('admin/employees/profile/*')? 'active':'' }}
+                                {{ request()->is('admin/employees/edit/*')? 'active':'' }}
+                                ">
                 <i class="fas fa-clipboard-list nav-icon"></i>
                 <p>List Employees</p>
             </a>

@@ -89,12 +89,12 @@
                                     @if($employee->attendanceToday)
                                         <td><h6 class="text-center"><span class="badge badge-pill badge-success">Recorded</span></h6></td>
                                         <td>
-                                            Recorded at {{ $employee->attendanceToday->created_at->format('H:i:s') }} from {{ $employee->attendanceToday->entry_location}} with IP {{ $employee->attendanceToday->entry_ip}}
+                                            Recorded at {{ $employee->attendanceToday->created_at->format('h:i:s a') }} from {{ $employee->attendanceToday->entry_location}} with IP {{ $employee->attendanceToday->entry_ip}}
                                         </td>
                                         @if ($employee->attendanceToday->exit_ip)
                                             <td><h6 class="text-center"><span class="badge badge-pill badge-success">Recorded</span></h6></td>
                                             <td>
-                                                Recorded at {{ $employee->attendanceToday->updated_at->format('H:i:s') }} from {{ $employee->attendanceToday->exit_location}} with IP {{ $employee->attendanceToday->exit_ip}}
+                                                Recorded at {{ $employee->attendanceToday->updated_at->format('h:i:s a') }} from {{ $employee->attendanceToday->exit_location}} with IP {{ $employee->attendanceToday->exit_ip}}
                                             </td>
                                         @else
                                             <td><h6 class="text-center"><span class="badge badge-pill badge-danger">No Record</span></h6></td>

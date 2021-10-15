@@ -1,7 +1,7 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
-    <!-- Content Header (Page header) -->
+<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -27,7 +27,7 @@
 </div>
 <!-- /.content-header -->
 
-    <!-- Main content -->
+<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
         @include('messages.alerts')
@@ -38,7 +38,7 @@
                         <div class="card-title text-center">
                             Employees
                         </div>
-                        
+
                     </div>
                     <div class="card-body">
                         @if ($employees->count())
@@ -54,82 +54,116 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($employees as $index => $employee)
+                                @foreach ($employees as $employee)
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $employee->first_name.' '.$employee->last_name }}</td>
                                     <td>{{ $employee->department->name }}</td>
                                     <td>{{ $employee->desg }}</td>
                                     <td>{{ $employee->join_date->format('d M, Y') }}</td>
                                     <td>
-                                        <a href="{{ route('admin.employees.profile', $employee->id) }}" class="btn btn-flat btn-info">View Profile</a>
-                                        <button 
-                                        class="btn btn-flat btn-danger"
-                                        data-toggle="modal" 
-                                        data-target="#deleteModalCenter{{ $index + 1 }}"
-                                        >Delete Employee</button>
+                                        <a href="{{ route('admin.employees.profile', $employee->id) }}"
+                                            class="btn btn-flat btn-info">View Profile</a>
+                                        <a href="{{ route('admin.employees.edit', $employee->id) }}"
+                                            class="btn btn-flat btn-primary">Edit Profile</a>
+                                        <button class="btn btn-flat btn-danger" data-toggle="modal"
+                                            data-target="#resetPass{{ $loop->iteration }}">Reset Password</button>
+                                        <button class="btn btn-flat btn-danger" data-toggle="modal"
+                                            data-target="#deleteModalCenter{{ $loop->iteration }}">Delete
+                                            Employee</button>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                            @for ($i = 1; $i < $employees->count()+1; $i++)
-                                <!-- Modal -->
-                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="card card-danger">
-                                                <div class="card-header">
-                                                    <h5 style="text-align: center !important">Are you sure want to delete?</h5>
-                                                </div>
-                                                <div class="card-body text-center d-flex" style="justify-content: center">
-                                                    
-                                                    <button type="button" class="btn flat btn-secondary" data-dismiss="modal">No</button>
-                                                    
-                                                    <form 
+                        @for ($i = 1; $i < $employees->count()+1; $i++)
+                            <!-- Modal -->
+                            <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog"
+                                aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="card card-danger">
+                                            <div class="card-header">
+                                                <h5 style="text-align: center !important">Are you sure want to delete?
+                                                </h5>
+                                            </div>
+                                            <div class="card-body text-center d-flex" style="justify-content: center">
+
+                                                <button type="button" class="btn flat btn-secondary"
+                                                    data-dismiss="modal">No</button>
+
+                                                <form
                                                     action="{{ route('admin.employees.delete', $employees->get($i-1)->id) }}"
-                                                    method="POST"
-                                                    >
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                        <button type="submit" class="btn flat btn-danger ml-1">Yes</button>
-                                                    </form>
-                                                </div>
-                                                <div class="card-footer text-center">
-                                                    <small>This action is irreversable</small>
-                                                </div>
+                                                    <button type="submit" class="btn flat btn-danger ml-1">Yes</button>
+                                                </form>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <small>This action is irreversable</small>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- /.modal -->
+                            </div>
+                            <!-- /.modal -->
+                            <!-- Modal -->
+                            <div class="modal fade" id="resetPass{{ $i }}" tabindex="-1" role="dialog"
+                                aria-labelledby="resetPass{{ $i }}" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="card card-danger">
+                                            <div class="card-header">
+                                                <h5 style="text-align: center !important">Are you sure want to delete?
+                                                </h5>
+                                            </div>
+                                            <div class="card-body text-center d-flex" style="justify-content: center">
+
+                                                <button type="button" class="btn flat btn-secondary"
+                                                    data-dismiss="modal">No</button>
+                                                <a href="{{ route('admin.employees.reset_pass', $employees->get($i-1)->id) }}">
+                                                    <button type="submit" class="btn flat btn-danger ml-1">
+                                                        Reset Password
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="card-footer text-center">
+                                                <small>This action is irreversable</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.modal -->
                             @endfor
-                        @else
-                        <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">
-                            <h4>No Records Available</h4>
-                        </div>
-                        @endif
-                        
+                            @else
+                            <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">
+                                <h4>No Records Available</h4>
+                            </div>
+                            @endif
+
                     </div>
                 </div>
                 <!-- general form elements -->
-                
+
             </div>
         </div>
     </div>
     <!-- /.container-fluid -->
 </section>
-    <!-- /.content -->
+<!-- /.content -->
 
 @endsection
 @section('extra-js')
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#dataTable').DataTable({
-            responsive:true,
+            responsive: true,
             autoWidth: false,
         });
     });
+
 </script>
 @endsection

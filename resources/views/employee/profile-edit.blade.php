@@ -1,6 +1,20 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
+<script>
+    function previewFile(input) {
+        var file = $("input[type=file]").get(0).files[0];
+
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                $("#imagePreview").attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
+
+</script>
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -37,28 +51,31 @@
                     <div class="card-header">
                         <h5 class="text-center mt-2">My Profile</h5>
                     </div>
-                    <form action="{{ route('employee.profile-update', $employee->id) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('employee.profile-update', $employee->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                    <div class="card-body">
-                        
+                        <div class="card-body">
+
                             <fieldset>
                                 <div class="form-group">
                                     <label for="">First Name</label>
-                                    <input type="text" name="first_name" value="{{ $employee->first_name }}" class="form-control">
+                                    <input type="text" name="first_name" value="{{ $employee->first_name }}"
+                                        class="form-control">
                                     @error('first_name')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Last Name</label>
-                                    <input type="text" name="last_name" value="{{ $employee->last_name }}" class="form-control">
+                                    <input type="text" name="last_name" value="{{ $employee->last_name }}"
+                                        class="form-control">
                                     @error('last_name')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -69,11 +86,11 @@
                                     <label for="">Gender</label>
                                     <select name="gender" class="form-control">
                                         @if ($employee->sex == 'Male')
-                                            <option value="Male" selected>Male</option>
-                                            <option value="Female">Female</option>
+                                        <option value="Male" selected>Male</option>
+                                        <option value="Female">Female</option>
                                         @else
-                                            <option value="Male">Male</option>
-                                            <option value="Female" selected>Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female" selected>Female</option>
                                         @endif
                                     </select>
                                 </div>
@@ -86,13 +103,12 @@
                                         <label for="">Designation</label>
                                         <select name="desg" class="form-control">
                                             @foreach ($desgs as $desg)
-                                                <option value="{{ $desg }}"
-                                                @if ($desg == $employee->desg)
-                                                    selected
+                                            <option value="{{ $desg }}" @if ($desg==$employee->desg)
+                                                selected
                                                 @endif
                                                 >
-                                                    {{ $desg }}
-                                                </option>
+                                                {{ $desg }}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -100,39 +116,45 @@
                                         <label for="">Department</label>
                                         <select name="department_id" class="form-control">
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}"
-                                                @if ($department->id == $employee->department_id)
-                                                    selected
+                                            <option value="{{ $department->id }}" @if ($department->id ==
+                                                $employee->department_id)
+                                                selected
                                                 @endif
                                                 >
-                                                    {{ $department->name }}
-                                                </option>
+                                                {{ $department->name }}
+                                            </option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Photo</label>
-                                    <input type="file" name="photo" class="form-control-file">
-                                    @error('photo')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
+                                     <input type="file" name="image" class="form-control-file"
+                                                onchange="previewFile(this);">
+                                    @error('image')
+                                    <div class="text-danger">
+                                        {{ $message }}
+                                    </div>
                                     @enderror
                                 </div>
-                                
+                                <div class="col-md-6">
+                                        <img src="{{ Storage::url($employee->image) }}" id="imagePreview" class="avatar" alt="..."
+                                            width="50%">
+                                    </div>
+
                             </fieldset>
-                            
-                        
-                    </div>
-                    <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-flat btn-primary" style="width: 40%; font-size:1.3rem">Save</button>
-                    </div>
-                </form>
+
+
+                        </div>
+                        <div class="card-footer text-center">
+                            <button type="submit" class="btn btn-flat btn-primary"
+                                style="width: 40%; font-size:1.3rem">Save</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        
+
     </div>
     <!-- /.container-fluid -->
 </section>
@@ -144,7 +166,7 @@
 
 @section('extra-js')
 <script>
-    $().ready(function() {
+    $().ready(function () {
         dob = new Date('{{ $employee->dob }}');
         joinDate = new Date('{{ $employee->join_date }}');
         $('#dob').daterangepicker({
@@ -162,5 +184,6 @@
             }
         });
     });
+
 </script>
 @endsection

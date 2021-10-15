@@ -26,6 +26,7 @@ class AttendanceController extends Controller
             }
         }
     }
+
     public function location(Request $request) {
         
         $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat='.$request->lat.'&lon='.$request->lon);
@@ -44,7 +45,6 @@ class AttendanceController extends Controller
 
     // Opens view for attendance register form
     public function create() {
-        
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee,
@@ -223,7 +223,6 @@ class AttendanceController extends Controller
         } else {
             $attendance->registered = 'no';
         }
-
         return $attendance;
     }
 
