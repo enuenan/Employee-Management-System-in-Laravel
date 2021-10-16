@@ -2,11 +2,12 @@
 
 namespace App;
 
+use App\AdminSettings;
 use App\Notifications\ResetPassword;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -59,6 +60,10 @@ class User extends Authenticatable
 
     public function employee() {
         return $this->hasOne('App\Employee');
+    }
+
+    public function adminSetting() {
+        return $this->hasOne(AdminSettings::class);
     }
 
     public function sendPasswordResetNotification($token)

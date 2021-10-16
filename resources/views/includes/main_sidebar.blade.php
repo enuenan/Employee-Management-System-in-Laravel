@@ -30,11 +30,14 @@
                     alt="User Image"
                 />
                 @else
-                <img
-                    src="/dist/img/user2-160x160.jpg"
-                    class="img-circle elevation-2"
-                    alt="User Image"
-                />
+                    {{-- <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image" /> --}}
+                
+                    @if (Auth::user()->adminSetting->image)
+                        <img src="{{ Storage::url(Auth::user()->adminSetting->image) }}" class="img-circle elevation-2"
+                            alt="User Image">
+                    @else
+                        <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    @endif
                 @endif
                 
             </div>
@@ -53,15 +56,18 @@
             >
                 @can('admin-access')
 
-                <li class="nav-item">
-                    <a href="{{ route('admin.index') }}" class="nav-link">
-                        <i class="fas fa-dna nav-icon"></i>
-                        <p>
-                                Admin Dashboard
-                            
-                        </p>
-                    </a>
-                </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.index') }}" class="nav-link {{ request()->is('admin') ? 'active':'' }}">
+                            <i class="fas fa-dna nav-icon"></i>
+                            <p>Admin Dashboard</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.allAdmin') }}" class="nav-link {{ request()->is('admin/all-admin') ? 'active':'' }}">
+                            <i class="fas fa-dna nav-icon"></i>
+                            <p>All Admin</p>
+                        </a>
+                    </li>
                 @include('includes.admin.sidebar_items')
                 @endcan
                 @can('employee-access')

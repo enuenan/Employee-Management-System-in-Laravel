@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
 
@@ -30,24 +30,33 @@
 
 <!-- Main content -->
 <section class="content">
-    <div class="container-fluid d-flex justify-content-center">
-      {{-- <row class="">
-        <div class="col-md-8 mx-auto">
-          <div class="jumbotron">
-            <h1 class="display-4 text-primary">Welcome to EAMS</h1>
-            <p class="lead">This is employee management application used for handling to the statistics, visualizations and other various tabular work</p>
-            <hr class="my-4">
-            <p>Hope you like it,
-              @if ($employee->sex == 'Male')
-                Mr. {{ $employee->first_name.' '.$employee->last_name }}
-              @else
-                Ms. {{ $employee->first_name.' '.$employee->last_name }}
-              @endif
-            </p>
-          </div>
+    <div class="container-fluid">
+        <div class="row mb-5">
+            <div class="col-md-3 col-sm-6 col-12">
+                <a href="{{ route('employee.attendance.create') }}">
+                    <div class="info-box shadow-none">
+                        <span class="info-box-icon bg-info">
+                            <img src="{{ asset('img/engineering_black_24dp.svg') }}" alt="" class="w-full"
+                                style="width: 50%">
+                        </span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Attendance for today</span>
+                            {{-- <span class="info-box-number">{{ $employees }}</span> --}}
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div>
         </div>
-      </row> --}}
-      <img src="{{ asset('img/Company-amico.svg') }}" alt="" srcset="" width="50%">
+
+        <div class="row mt-5">
+            <div class="col-md-12 d-flex justify-content-center">
+                <img src="{{ asset('img/Company-amico.svg') }}" alt="" srcset="" width="30%" class="bg-image">
+            </div>
+        </div>
+
     </div>
     <!-- /.container-fluid -->
 </section>

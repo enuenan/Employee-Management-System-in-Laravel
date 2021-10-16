@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Attendance;
-use App\Department;
-use App\Employee;
-use App\Http\Controllers\Controller;
 use App\Role;
 use App\User;
+use App\Employee;
 use Carbon\Carbon;
+use App\Attendance;
+use App\Department;
+use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Intervention\Image\ImageManagerStatic as Image;
 
-use function Ramsey\Uuid\v1;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EmployeeController extends Controller
 {
@@ -53,7 +54,7 @@ class EmployeeController extends Controller
             'department_id' => 'required',
             'email' => 'required|email|unique:users',
             'contact' => 'nullable|numeric|digits:11',
-            'photo' => 'image|nullable',
+            'image' => 'image|nullable',
             'password' => 'required|confirmed|min:6'
         ]);
         
@@ -80,7 +81,7 @@ class EmployeeController extends Controller
             $employeeDetails->department_id = $request->department_id; 
             // image upload
             if ($request->hasFile('image')) {
-                $employeeDetails->image = $request->image->store('public/profile/');
+                $employeeDetails->image = $request->image->store('public/profile');
             }
             
             $save=$employeeDetails->save();
@@ -124,7 +125,8 @@ class EmployeeController extends Controller
             $employee->department_id = $request->department_id; 
             // image upload
             if ($request->hasFile('image')) {
-                $employee->image = $request->image->store('public/profile/');
+                Storage::delete($employee->image);
+                $employee->image = $request->image->store('public/profile');
             }
             
             $save=$employee->save();
@@ -189,15 +191,50 @@ class EmployeeController extends Controller
 
     public function employeeProfile($employee_id) {
         $employee = Employee::findOrFail($employee_id);
-        return view('admin.employees.profile')->with('employee', $employee);
+        $month = Carbon::now()->month;
+        return $this->profileView($employee,$month);
+    }
+
+    public function getAttendanceByMonth($employee_id, $month) {
+        $employee = Employee::findOrFail($employee_id);
+        return $this->profileView($employee,$month);
+    }
+
+    public function profileView($employee,$month)
+    {
+        $thisMonthAttendances = Attendance::whereMonth('created_at', $month)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->where('employee_id', $employee->id)
+            ->get();
+            
+        $workingYear = Carbon::now()->year;
+        $totalWorkingDays = $this->get_weekdays($month,$workingYear);
+        // dd($workingMonth);
+        return view('admin.employees.profile', compact('employee','thisMonthAttendances', 'totalWorkingDays', 'month'));
+    }
+
+    private function get_weekdays($m,$y) {
+        $lastday = date("t",mktime(0,0,0,$m,1,$y));
+        $weekdays=0;
+        for($d=29;$d<=$lastday;$d++) {
+            $wd = date("w",mktime(0,0,0,$m,$d,$y));
+            if($wd > 0 && $wd < 6) $weekdays++;
+            }
+        return $weekdays+20;
     }
 
     public function resetPass($id)
     {
         $employee = Employee::findOrFail($id);
         $user = User::findOrFail($employee->user_id);
-        $user->password = Hash::make(71234567);
+        $user->password = Hash::make(123456);
         $user->save();
+        session()->flash('success', 'Password reset successfully');
         return back();
+    }
+
+    public function employeeAttendanceThisMonth($id)
+    {
+        # code...
     }
 }

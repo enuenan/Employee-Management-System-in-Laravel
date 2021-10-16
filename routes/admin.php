@@ -4,8 +4,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','can:admin-access'])->group(function () {
     Route::get('/', 'AdminController@index')->name('index');
+    Route::get('/edit-profile/{id}', 'AdminController@edit_profile')->name('edit_profile');
+    Route::post('/update-profile/{id}', 'AdminController@update_profile')->name('update_profile');
+    Route::get('/', 'AdminController@index')->name('index');
     Route::get('/reset-password', 'AdminController@reset_password')->name('reset-password');
     Route::put('/update-password', 'AdminController@update_password')->name('update-password');
+    Route::get('/all-admin', 'AdminController@allAdmin')->name('allAdmin');
+    Route::get('/add-admin', 'AdminController@add_addmin')->name('admin.create');
+    Route::post('/add-admin', 'AdminController@store_admin')->name('admin.store');
 
     // Routes for employees //
     Route::get('/employees/list-employees', 'EmployeeController@index')->name('employees.index');
@@ -19,6 +25,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::delete('/employees/attendance/{attendance_id}', 'EmployeeController@attendanceDelete')->name('employees.attendance.delete');
     Route::get('/employees/profile/{employee_id}', 'EmployeeController@employeeProfile')->name('employees.profile');
     Route::delete('/employees/{employee_id}', 'EmployeeController@destroy')->name('employees.delete');
+    Route::get('/employees/profile/{employee_id}/attendance-by-month/{month}', 'EmployeeController@getAttendanceByMonth')->name('employees.getAttendanceByMonth');
     // Routes for employees //
 
     // Routes for leaves //

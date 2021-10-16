@@ -41,7 +41,7 @@
                         @include('messages.alerts')
                         <div class="row mb-3">
                             <div class="col text-center mx-auto">
-                                <img src="{{ Storage::url($employee->image) }}" class="rounded-circle img-fluid w-50"
+                                <img src="{{ Storage::url($employee->image) }}" class="user-img img-fluid w-50"
                                     alt="" style="box-shadow: 2px 4px rgba(0,0,0,0.1)">
                             </div>
                         </div>

@@ -84,14 +84,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Gender</label>
-                                    <select name="gender" class="form-control">
-                                        @if ($employee->sex == 'Male')
+                                    <select name="gender" class="form-control" readonly>
                                         <option value="Male" selected>Male</option>
-                                        <option value="Female">Female</option>
-                                        @else
-                                        <option value="Male">Male</option>
-                                        <option value="Female" selected>Female</option>
-                                        @endif
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -129,8 +123,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Photo</label>
-                                     <input type="file" name="image" class="form-control-file"
-                                                onchange="previewFile(this);">
+                                    <input type="file" name="image" class="form-control-file"
+                                        onchange="previewFile(this);">
                                     @error('image')
                                     <div class="text-danger">
                                         {{ $message }}
@@ -138,9 +132,9 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6">
-                                        <img src="{{ Storage::url($employee->image) }}" id="imagePreview" class="avatar" alt="..."
-                                            width="50%">
-                                    </div>
+                                    <img src="{{ Storage::url($employee->image) }}" id="imagePreview" class="avatar"
+                                        alt="..." width="50%">
+                                </div>
 
                             </fieldset>
 

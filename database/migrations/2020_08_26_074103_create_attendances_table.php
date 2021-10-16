@@ -21,6 +21,7 @@ class CreateAttendancesTable extends Migration
             $table->string('exit_ip')->nullable();
             $table->string('exit_location')->nullable();
             $table->string('registered')->nullable();
+            $table->boolean('late_entry')->nullable();
             $table->timestamps();
         });
     }

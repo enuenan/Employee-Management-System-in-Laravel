@@ -1,3 +1,15 @@
+<style>
+    .blink_me {
+        animation: blinker 1.5s linear infinite;
+    }
+
+    @keyframes blinker {
+        50% {
+            opacity: 0;
+        }
+}
+</style>
+
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -10,6 +22,16 @@
 
     </ul>
 
+    @if (Auth::user()->employee)
+        @if ($lateCount != 0)
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-link h4 text-danger blink_me">
+                    WARNING!!! You have been late for {{ $lateCount }} days in this month.
+                </li>
+            </ul>
+        @endif
+    @endif
+
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
@@ -20,7 +42,14 @@
                 <img src="{{ Storage::url(Auth::user()->employee->image) }}" class="user-image img-circle elevation-2"
                     alt="User Image">
                 @else
-                <img src="/dist/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image">
+                {{-- <img src="/dist/img/user2-160x160.jpg" class="user-image img-circle elevation-2" alt="User Image"> --}}
+                
+                    @if (Auth::user()->adminSetting->image)
+                        <img src="{{ Storage::url(Auth::user()->adminSetting->image) }}" class="user-image img-circle elevation-2"
+                            alt="User Image">
+                    @else
+                        <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    @endif
                 @endif
                 <span class="hidden-xs">{{ Auth::user()->name }}</span>
             </a>
@@ -31,7 +60,12 @@
                     <img src="{{ Storage::url(Auth::user()->employee->image) }}" class="img-circle elevation-2"
                         alt="User Image">
                     @else
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        @if (Auth::user()->adminSetting->image)
+                            <img src="{{ Storage::url(Auth::user()->adminSetting->image) }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        @else
+                            <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        @endif
                     @endif
 
                     <p>
@@ -52,10 +86,11 @@
                 <li class="user-footer">
                     <div class="pull-left">
                         @if ( Auth::user()->employee )
-                        <a href="{{ route('employee.profile') }}" class="btn btn-default btn-flat">Profile</a>
+                            <a href="{{ route('employee.profile') }}" class="btn btn-default btn-flat">Profile</a>
                         @else
-                        <a href="{{ route('admin.reset-password') }}" class="btn btn-default btn-flat">Change
-                            Password</a>
+                            <a href="{{ route('admin.reset-password') }}" class="btn btn-default btn-flat">
+                                Change Password
+                            </a>
                         @endif
                     </div>
                     <div class="pull-right">

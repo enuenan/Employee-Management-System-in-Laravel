@@ -122,9 +122,9 @@
                                         @if ($attendance->registered == 'yes')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-success">Present</span> </h5></td>
-                                        <td>{{ $attendance->created_at->format('H:i:s') }}</td>
+                                        <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
                                         <td>{{ $attendance->entry_location }}</td>
-                                        <td>{{ $attendance->updated_at->format('H:i:s') }}</td>
+                                        <td>{{ $attendance->updated_at->format('H:i:s a') }}</td>
                                         <td>{{ $attendance->exit_location }}</td>
                                         @elseif($attendance->registered == 'no')
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
@@ -157,7 +157,7 @@
                                         @else
                                         <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
                                         <td><h5 class="text-center"><span class="badge badge-pill badge-warning">Half Day</span> </h5></td>
-                                        <td>{{ $attendance->created_at->format('H:i:s') }}</td>
+                                        <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
                                         <td>{{ $attendance->entry_location }}</td>
                                         <td>No entry</td>
                                         <td>No entry</td>

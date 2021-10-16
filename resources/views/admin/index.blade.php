@@ -44,6 +44,24 @@
 
         <div class="row mb-5">
             <div class="col-md-3 col-sm-6 col-12">
+                <a href="{{ route('admin.allAdmin') }}">
+                    <div class="info-box shadow-none">
+                        <span class="info-box-icon bg-info">
+                            <img src="{{ asset('img/engineering_black_24dp.svg') }}" alt="" class="w-full"
+                                style="width: 50%">
+                        </span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text">All Admin</span>
+                            <span class="info-box-number">{{ $admins }}</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div>
+            
+            <div class="col-md-3 col-sm-6 col-12">
                 <a href="{{ route('admin.employees.index') }}">
                     <div class="info-box shadow-none">
                         <span class="info-box-icon bg-info">
@@ -52,7 +70,7 @@
                         </span>
     
                         <div class="info-box-content">
-                            <span class="info-box-text">Employees</span>
+                            <span class="info-box-text">All Employees</span>
                             <span class="info-box-number">{{ $employees }}</span>
                         </div>
                         <!-- /.info-box-content -->

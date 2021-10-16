@@ -36,39 +36,54 @@
                     <div class="card-header">
                         <h5 class="text-center">Reset Pasword</h5>
                     </div>
-                    <form action="{{ route('admin.update-password') }}" method="POST">
+                    @include('messages.alerts')
+                    @if ( Auth::user()->employee )
+                        <form action="{{ route('employee.update-password') }}" method="POST">
+                    @else
+                        <form action="{{ route('admin.update-password') }}" method="POST">
+                    @endif
                     @csrf
                     @method('PUT')
                     <div class="card-body">
                         <div class="input-group mb-3">
-                            <input type="password" name="old_password" class="form-control" placeholder="Current Password">
+                            <input type="password" name="current_password" class="form-control" placeholder="Current Password" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
                         </div>
-                        @if (session('error'))
-                                <div class="text-danger">
-                                    Wrong Password
-                                </div>
-                        @endif
+                        @error ('current_password')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                         <div class="input-group mb-3">
-                            <input type="password" name="password" class="form-control" placeholder="New Password">
+                            <input type="password" name="password" class="form-control" placeholder="New Password" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
+                        @error ('password')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                             
                         </div>
                         <div class="input-group mb-3">
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
                                     <span class="fas fa-lock"></span>
                                 </div>
                             </div>
+                        @error ('password_confirmation')
+                            <div class="text-danger">
+                                {{ $message }}
+                            </div>
+                        @enderror
                         </div>
                     </div>
                     <div class="card-footer text-center">

@@ -102,17 +102,58 @@
     </ul>
 </li>
 
-<li class="nav-item has-treeview {{ request()->is('employee/self/holidays') ? 'menu-open' : '' }}">
+<li class="nav-item has-treeview {{ request()->is('employee/profile') ? 'menu-open' : '' }}
+                                 {{ request()->is('employee/profile-edit/*')? 'menu-open':'' }}
+                                 {{ request()->is('employee/reset-password') ? 'menu-open':'' }}
+                                 {{ request()->is('employee/update-password') ? 'menu-open':'' }}
+            ">
+    <a href="#" class="nav-link {{ request()->is('employee/profile') ? 'active' : '' }}
+                                {{ request()->is('employee/profile-edit/*')? 'active':'' }}
+                                {{ request()->is('employee/reset-password')? 'active':'' }}
+                                {{ request()->is('employee/update-password')? 'active':'' }}
+            ">
+        <i class="nav-icon fa fa-calendar-minus-o"></i>
+        <p>
+            Settings
+            <i class="fas fa-angle-left right"></i>
+            {{-- <span class="badge badge-info right">2</span> --}}
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a
+            href="{{ route('employee.profile') }}"
+                class="nav-link {{ request()->is('employee/profile') ? 'active' : '' }}
+                                {{ request()->is('employee/profile-edit/*') ? 'active' : '' }}
+                ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Profile</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a
+            href="{{ route('employee.reset-password') }}"
+                class="nav-link {{ request()->is('employee/reset-password')? 'active':'' }}
+                                {{ request()->is('employee/update-password')? 'active':'' }}
+                ">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Change Password</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+{{-- <li class="nav-item has-treeview {{ request()->is('employee/self/holidays') ? 'menu-open' : '' }}">
     <a href="#" class="nav-link {{ request()->is('employee/self/holidays') ? 'active' : '' }}">
         <i class="nav-icon fa fa-address-card"></i>
         <p>
             Self
             <i class="fas fa-angle-left right"></i>
-            {{-- <span class="badge badge-info right">3</span> --}}
+            <span class="badge badge-info right">3</span>
         </p>
     </a>
     <ul class="nav nav-treeview">
-        {{-- <li class="nav-item">
+        <li class="nav-item">
             <a
                 href="{{ route('employee.self.salary_slip') }}"
                 class="nav-link"
@@ -120,7 +161,7 @@
                 <i class="far fa-circle nav-icon"></i>
                 <p>Generate Salary slip</p>
             </a>
-        </li> --}}
+        </li>
         <li class="nav-item">
             <a
                 href="{{ route('employee.self.holidays') }}"
@@ -131,4 +172,4 @@
             </a>
         </li>
     </ul>
-</li>
+</li> --}}

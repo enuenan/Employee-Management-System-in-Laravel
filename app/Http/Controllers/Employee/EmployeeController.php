@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\Employee;
 
-use App\Department;
+use App\User;
 use App\Employee;
-use App\Http\Controllers\Controller;
-use Intervention\Image\ImageManagerStatic as Image;
+use App\Department;
 use Illuminate\Http\Request;
+use App\Rules\MatchOldPassword;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class EmployeeController extends Controller
 {
@@ -51,33 +55,40 @@ class EmployeeController extends Controller
         $employee->join_date = $request->join_date;
         $employee->desg = $request->desg;
         $employee->department_id = $request->department_id;
-        if ($request->hasFile('photo')) {
-            // Deleting the old image
-            if ($employee->photo != 'user.png') {
-                $old_filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR. $employee->photo);
-                if(file_exists($old_filepath)) {
-                    unlink($old_filepath);
-                }    
-            }
-            // GET FILENAME
-            $filename_ext = $request->file('photo')->getClientOriginalName();
-            // GET FILENAME WITHOUT EXTENSION
-            $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
-            // GET EXTENSION
-            $ext = $request->file('photo')->getClientOriginalExtension();
-            //FILNAME TO STORE
-            $filename_store = $filename.'_'.time().'.'.$ext;
-            // UPLOAD IMAGE
-            // $path = $request->file('photo')->storeAs('public'.DIRECTORY_SEPARATOR.'employee_photos', $filename_store);
-            // add new file name
-            $image = $request->file('photo');
-            $image_resize = Image::make($image->getRealPath());              
-            $image_resize->resize(300, 300);
-            $image_resize->save(public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'employee_photos'.DIRECTORY_SEPARATOR.$filename_store));
-            $employee->photo = $filename_store;
+        if ($request->hasFile('image')) {
+            Storage::delete($employee->image);
+            $employee->image = $request->image->store('public/profile');
         }
         $employee->save();
         $request->session()->flash('success', 'Your profile has been successfully updated!');
         return redirect()->route('employee.profile');
     }
+    
+    public function reset_password() {
+        return view('auth.reset-password');
+    }
+
+    public function update_password(Request $request) {
+        // $user = Auth::user();
+        // if($user->password == Hash::make($request->old_password)) {
+        //     dd($request->all());
+        // } else {
+        //     dd("error");
+        //     $request->session()->flash('error', 'Wrong Password');
+        //     return back();
+        // }
+        
+
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'password' => ['required', 'min:6'],
+            'password_confirmation' => ['same:password', 'min:6'],
+        ]);
+   
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->password)]);
+        
+        $request->session()->flash('success', 'Password updated successfully');
+        return back();
+    }
+
 }

@@ -117,3 +117,39 @@
         </li>
     </ul>
 </li>
+<li class="nav-item has-treeview {{ request()->is('admin/add-admin') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/edit-profile/*') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/reset-password') ? 'menu-open' : '' }}
+    ">
+    <a href="#" class="nav-link  {{ request()->is('admin/add-admin') ? 'active' : '' }}
+        {{ request()->is('admin/edit-profile/*') ? 'active' : '' }}
+        {{ request()->is('admin/reset-password') ? 'active' : '' }}
+        ">
+        <i class="nav-icon fas fa-user-cog"></i>
+        <p>
+            Settings
+            <i class="fas fa-angle-left right"></i>
+            {{-- <span class="badge badge-info right">2</span> --}}
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="{{ route('admin.admin.create') }}" class="nav-link  {{ request()->is('admin/add-admin') ? 'active' : '' }}" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Admin</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.edit_profile', auth()->user()->id) }}" class="nav-link  {{ request()->is('admin/edit-profile/*') ? 'active' : '' }}" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Edit Profile</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.reset-password', auth()->user()->id) }}" class="nav-link  {{ request()->is('admin/reset-password') ? 'active' : '' }}" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Change Password</p>
+            </a>
+        </li>
+    </ul>
+</li>
