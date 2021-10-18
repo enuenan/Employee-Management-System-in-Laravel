@@ -36,7 +36,7 @@ class EmployeeMiddleware
             }
         }
         // $count = 4;
-        if($count>3){
+        if($count>5){
             \View::share('lateCount', $count);
         }else{
             \View::share('lateCount', 0);
