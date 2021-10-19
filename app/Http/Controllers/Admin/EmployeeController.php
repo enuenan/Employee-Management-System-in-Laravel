@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin\Designation;
 use App\Role;
 use App\User;
 use App\Employee;
@@ -30,7 +31,7 @@ class EmployeeController extends Controller
     public function create() {
         $data = [
             'departments' => Department::all(),
-            'desgs' => ['Data entry executive', 'Data entry team lead', '3d artist', 'Web Developer']
+            'desgs' => Designation::all()
         ];
         return view('admin.employees.create')->with($data);
     }
@@ -38,9 +39,10 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $departments = Department::all();
-        $desgs = ['Data entry executive', 'Data entry team lead', '3d artist', 'Web Developer'];
+        $desgs = Designation::all();
 
         $employee = Employee::findOrFail($id);
+        // dd($employee);
         $user = User::findOrFail($employee->user_id);
         return view('admin.employees.edit', compact('departments', 'desgs', 'user', 'employee'));
     }

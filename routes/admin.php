@@ -13,6 +13,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::get('/add-admin', 'AdminController@add_addmin')->name('admin.create');
     Route::post('/add-admin', 'AdminController@store_admin')->name('admin.store');
 
+    Route::resource('department', DepartmentController::class);
+    Route::resource('designation', DesignationController::class);
+
     // Routes for employees //
     Route::get('/employees/list-employees', 'EmployeeController@index')->name('employees.index');
     Route::get('/employees/reset-password/{id}', 'EmployeeController@resetPass')->name('employees.reset_pass');

@@ -146,8 +146,8 @@
                                         <select name="desg" class="form-control" required>
                                             <option hidden disabled selected value> -- select an option -- </option>
                                             @foreach ($desgs as $desg)
-                                            <option value="{{ $desg }}" @if (old('desg')==$desg) selected @endif>
-                                                {{ $desg }}
+                                            <option value="{{ $desg->name }}" @if (old('desg')==$desg->name) selected @endif>
+                                                {{ $desg->name }}
                                             </option>
                                             @endforeach
                                         </select>

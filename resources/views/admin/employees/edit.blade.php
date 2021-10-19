@@ -152,9 +152,9 @@
                                         <label for="">Designation</label>
                                         <select name="desg" class="form-control" required>
                                             @foreach ($desgs as $desg)
-                                            <option value="{{ $desg }}" @if (old('desg')==$desg) selected @endif
-                                                {{ ($employee->desg == $desg)? 'selected' : '' }}>
-                                                {{ $desg }}
+                                            <option value="{{ $desg->name }}" @if (old('desg')==$desg->name) selected @endif
+                                                {{ ($employee->desg == $desg->name)? 'selected' : '' }}>
+                                                {{ $desg->name }}
                                             </option>
                                             @endforeach
                                         </select>

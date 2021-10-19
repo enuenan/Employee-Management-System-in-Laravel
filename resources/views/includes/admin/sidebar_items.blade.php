@@ -120,10 +120,22 @@
 <li class="nav-item has-treeview {{ request()->is('admin/add-admin') ? 'menu-open' : '' }}
                                 {{ request()->is('admin/edit-profile/*') ? 'menu-open' : '' }}
                                 {{ request()->is('admin/reset-password') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/department') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/department/create') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/department/*/edit') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/designation') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/designation/create') ? 'menu-open' : '' }}
+                                {{ request()->is('admin/designation/*/edit') ? 'menu-open' : '' }}
     ">
     <a href="#" class="nav-link  {{ request()->is('admin/add-admin') ? 'active' : '' }}
         {{ request()->is('admin/edit-profile/*') ? 'active' : '' }}
         {{ request()->is('admin/reset-password') ? 'active' : '' }}
+        {{ request()->is('admin/department') ? 'active' : '' }}
+        {{ request()->is('admin/department/create') ? 'active' : '' }}
+        {{ request()->is('admin/department/*/edit') ? 'active' : '' }}
+        {{ request()->is('admin/designation') ? 'active' : '' }}
+        {{ request()->is('admin/designation/create') ? 'active' : '' }}
+        {{ request()->is('admin/designation/*/edit') ? 'active' : '' }}
         ">
         <i class="nav-icon fas fa-user-cog"></i>
         <p>
@@ -137,6 +149,22 @@
             <a href="{{ route('admin.admin.create') }}" class="nav-link  {{ request()->is('admin/add-admin') ? 'active' : '' }}" >
                 <i class="far fa-circle nav-icon"></i>
                 <p>Add Admin</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.department.index') }}" class="nav-link  {{ request()->is('admin/department') ? 'active' : '' }} 
+                                                                            {{ request()->is('admin/department/create') ? 'active' : '' }}
+                                                                            {{ request()->is('admin/department/*/edit') ? 'active' : '' }}" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Department</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.designation.index') }}" class="nav-link  {{ request()->is('admin/designation') ? 'active' : '' }}
+                                                                            {{ request()->is('admin/designation/create') ? 'active' : '' }}
+                                                                            {{ request()->is('admin/designation/*/edit') ? 'active' : '' }}" >
+                <i class="far fa-circle nav-icon"></i>
+                <p>Add Designation</p>
             </a>
         </li>
         <li class="nav-item">
