@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','can:admin-access'])->group(function () {
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth', 'can:admin-access', 'admin'])->group(function () {
     Route::get('/', 'AdminController@index')->name('index');
     Route::get('/edit-profile/{id}', 'AdminController@edit_profile')->name('edit_profile');
     Route::post('/update-profile/{id}', 'AdminController@update_profile')->name('update_profile');
@@ -34,11 +35,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     // Routes for leaves //
     Route::get('/leaves/list-leaves', 'LeaveController@index')->name('leaves.index');
     Route::put('/leaves/{leave_id}', 'LeaveController@update')->name('leaves.update');
+    Route::get('/leaves/{leave_id}', 'LeaveController@delete')->name('leaves.delete');
     // Routes for leaves //
 
     // Routes for expenses //
     Route::get('/expenses/list-expenses', 'ExpenseController@index')->name('expenses.index');
     Route::put('/expenses/{expense_id}', 'ExpenseController@update')->name('expenses.update');
+    Route::get('/expenses/{expense_id}', 'ExpenseController@delete')->name('expenses.delete');
     // Routes for expenses //
 
     // Routes for holidays //
@@ -49,4 +52,10 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware(['auth','
     Route::put('/holidays/{holiday_id}', 'HolidayController@update')->name('holidays.update');
     Route::delete('/holidays/{holiday_id}', 'HolidayController@destroy')->name('holidays.delete');
     // Routes for holidays //
+
+    //ROUTE FOR NOTICE
+    Route::resource('notice', NoticeController::class);
+    //ROUTE FOR NOTICE 
+
+    Route::get('markNotiAsRead/{notification}/{type}', [NotificationController::class, 'markNotiAsRead'])->name('markNotiAsRead');
 });

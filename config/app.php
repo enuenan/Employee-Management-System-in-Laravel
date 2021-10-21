@@ -178,6 +178,7 @@ return [
         * External Service Provider
         */
         Intervention\Image\ImageServiceProvider::class,
+        Stevebauman\Location\LocationServiceProvider::class
 
     ],
 

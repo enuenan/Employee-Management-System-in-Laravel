@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -45,106 +45,133 @@
                         </div>
                         <div class="card-body">
                             @if ($leaves->count())
-                            <table class="table table-hover" id="dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Applied on</th>
-                                        <th>Name</th>
-                                        <th>Department</th>
-                                        <th>Designation</th>
-                                        <th>Reason</th>
-                                        <th>Status</th>
-                                        <th class="none">Half Day</th>
-                                        <th class="none">Start Date</th>
-                                        <th class="none">End Date</th>
-                                        <th class="none">Description</th>
-                                        <td class="none">Actions</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($leaves as $index => $leave)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        <td>{{ $leave->created_at->format('d-m-Y') }}</td>
-                                        <td>{{ $leave->employee->first_name.' '.$leave->employee->last_name }}</td>
-                                        <td>{{ $leave->employee->department }}</td>
-                                        <td>{{ $leave->employee->desg }}</td>
-                                        <td>{{ $leave->reason }}</td>
-                                        <td>
-                                            <h5>
-                                                <span 
-                                                @if ($leave->status == 'pending')
-                                                    class="badge badge-pill badge-warning"
-                                                @elseif($leave->status == 'declined')
-                                                    class="badge badge-pill badge-danger"
-                                                @elseif($leave->status == 'approved')
-                                                    class="badge badge-pill badge-success"
-                                                @endif
-                                                >
-                                                    {{ ucfirst($leave->status) }}
-                                                </span> 
-                                            </h5>
+                                <table class="table table-hover" id="dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Applied on</th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Designation</th>
+                                            <th>Reason</th>
+                                            <th>Status</th>
+                                            <th class="none">Half Day</th>
+                                            <th class="none">Start Date</th>
+                                            <th class="none">End Date</th>
+                                            <th class="none">Description</th>
+                                            <td class="none">Actions</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($leaves as $index => $leave)
+                                            <tr>
+                                                <td>{{ $index + 1 }}</td>
+                                                <td>{{ $leave->created_at->format('d-m-Y') }}</td>
+                                                <td>{{ $leave->employee->first_name . ' ' . $leave->employee->last_name }}
+                                                </td>
+                                                <td>{{ $leave->employee->department }}</td>
+                                                <td>{{ $leave->employee->desg }}</td>
+                                                <td>{{ $leave->reason }}</td>
+                                                <td>
+                                                    <h5>
+                                                        <span @if ($leave->status == 'pending')
+                                                            class="badge badge-pill badge-warning"
+                                                        @elseif($leave->status == 'declined')
+                                                            class="badge badge-pill badge-danger"
+                                                        @elseif($leave->status == 'approved')
+                                                            class="badge badge-pill badge-success"
+                                        @endif
+                                        >
+                                        {{ ucfirst($leave->status) }}
+                                        </span>
+                                        </h5>
                                         </td>
                                         <td>{{ ucfirst($leave->half_day) }}</td>
-                                        <td>{{ $leave->start_date->format('d-m-Y')}}</td>
-                                        @if($leave->end_date) 
-                                        <td>{{ $leave->end_date->format('d-m-Y') }}</td>
+                                        <td>{{ $leave->start_date->format('d-m-Y') }}</td>
+                                        @if ($leave->end_date)
+                                            <td>{{ $leave->end_date->format('d-m-Y') }}</td>
                                         @else
-                                        <td>Single Day</td>
+                                            <td>Single Day</td>
                                         @endif
                                         <td>{{ $leave->description }}</td>
                                         <td>
-                                            <button 
-                                            class="btn btn-flat btn-info"
-                                            data-toggle="modal"
-                                            data-target="#deleteModalCenter{{ $index + 1 }}"
-                                            >
-                                            Change Status
+                                            <button class="btn btn-flat btn-info" data-toggle="modal"
+                                                data-target="#changeStatus{{ $index + 1 }}">
+                                                Change Status
+                                            </button>
+                                            <button class="btn btn-flat btn-danger" data-toggle="modal"
+                                                data-target="#deleteModalCenter{{ $index + 1 }}">
+                                                Delete
                                             </button>
                                         </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+                                        </tr>
+                            @endforeach
+                            </tbody>
                             </table>
-                            @for ($i = 1; $i < $leaves->count()+1; $i++)
+                            @for ($i = 1; $i < $leaves->count() + 1; $i++)
                                 <!-- Modal -->
-                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                <div class="modal fade" id="changeStatus{{ $i }}" tabindex="-1"
+                                    role="dialog" aria-labelledby="changeStatusTitle1{{ $i }}"
+                                    aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="card card-info">
                                                 <div class="card-header">
                                                     <h5 style="text-align: center !important">Update Leave Status</h5>
                                                 </div>
-                                                <form 
-                                                    action="{{ route('admin.leaves.update', $leaves->get($i-1)->id) }}"
-                                                    method="POST"
-                                                >
-                                                <div class="card-body">
-                                                    @csrf
-                                                    @method('PUT')
+                                                <form
+                                                    action="{{ route('admin.leaves.update', $leaves->get($i - 1)->id) }}"
+                                                    method="POST">
+                                                    <div class="card-body">
+                                                        @csrf
+                                                        @method('PUT')
                                                         <div class="form-group text-center">
                                                             <label for="">Select status</label>
-                                                            <select name="status" class="form-control text-center mx-auto" style="width:50%">
+                                                            <select name="status" class="form-control text-center mx-auto"
+                                                                style="width:50%">
                                                                 <option hidden disabled selected value> ---- </option>
                                                                 <option value="pending">Pending</option>
                                                                 <option value="approved">Approve</option>
                                                                 <option value="declined">Decline</option>
                                                             </select>
                                                         </div>
-                                                        
+
+                                                    </div>
+                                                    <div class="card-footer text-center">
+                                                        <button type="submit" class="btn flat btn-info">Update</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1"
+                                    role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="card card-info">
+                                                <div class="card-header">
+                                                    <h5 style="text-align: center !important">Delete Leave Status</h5>
                                                 </div>
                                                 <div class="card-footer text-center">
-                                                    <button type="submit" class="btn flat btn-info">Update</button>
+                                                    <button type="submit" class="btn flat btn-info"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <a
+                                                        href="{{ route('admin.leaves.delete', $leaves->get($i - 1)->id) }}">
+                                                        <button type="submit" class="btn flat btn-danger">Delete</button>
+                                                    </a>
                                                 </div>
-                                            </form>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.modal -->
                             @endfor
-                            @else
+                        @else
                             <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">
                                 <h4>No records available</h4>
                             </div>
@@ -162,24 +189,32 @@
 
 @section('extra-js')
 
-<script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();
-    $('.popover-dismiss').popover({
-        trigger: 'focus'
-    });
-    $('#dataTable').DataTable({
-        responsive:true,
-        autoWidth: false,
-        columnDefs: [
-            { responsivePriority: 1, targets: 0 },
-            { responsivePriority: 2, targets: 1 },
-            { responsivePriority: 200000000000, targets: -1 }
-        ]
-    });
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger: 'hover'
-    });
-});
-</script>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();
+            $('.popover-dismiss').popover({
+                trigger: 'focus'
+            });
+            $('#dataTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+                columnDefs: [{
+                        responsivePriority: 1,
+                        targets: 0
+                    },
+                    {
+                        responsivePriority: 2,
+                        targets: 1
+                    },
+                    {
+                        responsivePriority: 200000000000,
+                        targets: -1
+                    }
+                ]
+            });
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: 'hover'
+            });
+        });
+    </script>
 @endsection

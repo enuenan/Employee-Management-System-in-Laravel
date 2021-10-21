@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -48,18 +48,19 @@
                                     <label for="">Reason</label>
                                     <input type="text" name="reason" value="{{ $leave->reason }}" class="form-control">
                                     @error('reason')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" class="form-control" >{{ $leave->description }}</textarea>
+                                    <textarea name="description"
+                                        class="form-control">{{ $leave->description }}</textarea>
                                     @error('description')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 @if ($leave->end_date)
@@ -81,9 +82,9 @@
                                         <label for="">Date Range: </label>
                                         <input type="text" name="date_range" id="date_range" class="form-control">
                                         @error('date_range')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                     <div class="form-group hide-input" id="date-group">
@@ -94,19 +95,19 @@
                                     <div class="form-group">
                                         <label>Multiple Days</label>
                                         <select class="form-control" name="multiple-days" onchange="showDate()">
-                                            <option value="yes" >Yes</option>
+                                            <option value="yes">Yes</option>
                                             <option value="no" selected>No</option>
                                         </select>
                                     </div>
                                     <div class="form-group" id="half-day">
                                         <label>Half Day</label>
                                         <select class="form-control" name="half-day">
-                                            @if ($leave->half_day == "no")
+                                            @if ($leave->half_day == 'no')
                                                 <option value="no" selected>No</option>
-                                                <option value="yes">Yes</option>    
+                                                <option value="yes">Yes</option>
                                             @else
-                                            <option value="no" >No</option>
-                                            <option value="yes" selected>Yes</option>    
+                                                <option value="no">No</option>
+                                                <option value="yes" selected>Yes</option>
                                             @endif
                                         </select>
                                     </div>
@@ -114,9 +115,9 @@
                                         <label for="">Date Range: </label>
                                         <input type="text" name="date_range" id="date_range" class="form-control">
                                         @error('date_range')
-                                        <div class="text-danger">
-                                            {{ $message }}
-                                        </div>
+                                            <div class="text-danger">
+                                                {{ $message }}
+                                            </div>
                                         @enderror
                                     </div>
                                     <div class="form-group" id="date-group">
@@ -141,48 +142,49 @@
 
 @section('extra-js')
 
-<script>
-    $(document).ready(function() {
-        startDate = moment('{{ $leave->start_date }}');
-        if('{{ $leave->end_date }}') {
-            endDate = new Date('{{ $leave->end_date }}');
-            $('#date_range').daterangepicker({
-                "startDate": startDate,
-                "endDate": endDate,
-                "locale": {
-                    "format": "DD-MM-YYYY",
-                }
-            });
+    <script>
+        $(document).ready(function() {
+            startDate = moment('{{ $leave->start_date }}');
+            if ('{{ $leave->end_date }}') {
+                endDate = new Date('{{ $leave->end_date }}');
+                $('#date_range').daterangepicker({
+                    "startDate": startDate,
+                    "endDate": endDate,
+                    "locale": {
+                        "format": "DD-MM-YYYY",
+                    }
+                });
 
-            $('#date').daterangepicker({
-                "singleDatePicker": true,
-                "locale": {
-                    "format": "DD-MM-YYYY",
-                }
-            });
-        } else {
-            $('#date_range').daterangepicker({
-                "locale": {
-                    "format": "DD-MM-YYYY",
-                }
-            });
-            $('#date').daterangepicker({
-                "startDate": startDate,
-                "singleDatePicker": true,
-                "locale": {
-                    "format": "DD-MM-YYYY",
-                }
-            });
+                $('#date').daterangepicker({
+                    "singleDatePicker": true,
+                    "locale": {
+                        "format": "DD-MM-YYYY",
+                    }
+                });
+            } else {
+                $('#date_range').daterangepicker({
+                    "locale": {
+                        "format": "DD-MM-YYYY",
+                    }
+                });
+                $('#date').daterangepicker({
+                    "startDate": startDate,
+                    "singleDatePicker": true,
+                    "locale": {
+                        "format": "DD-MM-YYYY",
+                    }
+                });
+            }
+
+
+
+
+        });
+
+        function showDate() {
+            $('#range-group').toggleClass('hide-input');
+            $('#date-group').toggleClass('hide-input');
+            $('#half-day').toggleClass('hide-input');
         }
-        
-        
-        
-        
-    });
-    function showDate() {
-        $('#range-group').toggleClass('hide-input');
-        $('#date-group').toggleClass('hide-input');
-        $('#half-day').toggleClass('hide-input');
-    }
-</script>
+    </script>
 @endsection

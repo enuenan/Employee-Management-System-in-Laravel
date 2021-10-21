@@ -55,6 +55,10 @@
                                 <td>{{ $employee->last_name }}</td>
                             </tr>
                             <tr>
+                                <td>Email</td>
+                                <td>{{ $employee->user->email }}</td>
+                            </tr>
+                            <tr>
                                 <td>Date of Birth</td>
                                 <td>{{ $employee->dob->format('d M, Y') }}</td>
                             </tr>
@@ -186,12 +190,14 @@
                                 <td>{{ $thisMonthAttendance->exit_location }}</td>
                                 <td>
                                     @php
-                                    $checkInTime = strtotime('07:59:59');
+                                    $checkInTime = strtotime('08:30:00');
                                     $loginTime = strtotime(date("H:i:s", strtotime($thisMonthAttendance->created_at)));
                                     $diff = $checkInTime - $loginTime;
                                     @endphp
                                     @if ($diff<0) 
-                                        <p class="text-danger">Late for {{ date("H:i:s", abs($diff)) }}</p>
+                                        <p class="text-danger">Late 
+                                            {{-- for {{ date("H:i:s", abs($diff)) }} --}}
+                                        </p>
                                     @else
                                         <p>In Time</p>
                                     @endif

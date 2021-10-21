@@ -32,4 +32,13 @@ class ExpenseController extends Controller
         
         return back();
     }
+
+    public function delete($expense_id)
+    {
+        $expense = Expense::find($expense_id);
+        $expense->delete();
+        session()->flash('success', 'expens status has been successfully deleted');
+        
+        return back();
+    }
 }

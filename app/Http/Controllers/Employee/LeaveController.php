@@ -1,18 +1,23 @@
 <?php
 
 namespace App\Http\Controllers\Employee;
-use App\Http\Controllers\Controller;
+
+use App\User;
 
 use App\Leave;
-use App\Rules\DateRange;
 use Carbon\Carbon;
+use App\Rules\DateRange;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Notifications\AdminLeavesNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class LeaveController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee,
@@ -20,7 +25,9 @@ class LeaveController extends Controller
         ];
         return view('employee.leaves.index')->with($data);
     }
-    public function create() {
+
+    public function create()
+    {
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee
@@ -29,11 +36,12 @@ class LeaveController extends Controller
         return view('employee.leaves.create')->with($data);
     }
 
-    public function store(Request $request, $employee_id) {
+    public function store(Request $request, $employee_id)
+    {
         $data = [
             'employee' => Auth::user()->employee
         ];
-        if($request->input('multiple-days') == 'yes') {
+        if ($request->input('multiple-days') == 'yes') {
             $this->validate($request, [
                 'reason' => 'required',
                 'description' => 'required',
@@ -45,14 +53,14 @@ class LeaveController extends Controller
                 'description' => 'required'
             ]);
         }
-        
+
         $values = [
             'employee_id' => $employee_id,
             'reason' => $request->input('reason'),
             'description' => $request->input('description'),
             'half_day' => $request->input('half-day')
         ];
-        if($request->input('multiple-days') == 'yes') {
+        if ($request->input('multiple-days') == 'yes') {
             [$start, $end] = explode(' - ', $request->input('date_range'));
             $values['start_date'] = Carbon::parse($start);
             $values['end_date'] = Carbon::parse($end);
@@ -60,20 +68,30 @@ class LeaveController extends Controller
             $values['start_date'] = Carbon::parse($request->input('date'));
         }
         Leave::create($values);
+
+        $lastData = Leave::latest()->first();
+        $admins = DB::table('role_user')->where('role_id', 1)->get();
+        // dd($admins);
+        foreach ($admins as $admin) {
+            $user = User::find($admin->user_id);
+            $user->notify(new AdminLeavesNotification($lastData));
+        }
         $request->session()->flash('success', 'Your Leave has been successfully applied, wait for approval.');
         return redirect()->route('employee.leaves.create')->with($data);
     }
 
-    public function edit($leave_id) {
+    public function edit($leave_id)
+    {
         $leave = Leave::findOrFail($leave_id);
         Gate::authorize('employee-leaves-access', $leave);
         return view('employee.leaves.edit')->with('leave', $leave);
     }
 
-    public function update(Request $request, $leave_id) {
+    public function update(Request $request, $leave_id)
+    {
         $leave = Leave::findOrFail($leave_id);
         Gate::authorize('employee-leaves-access', $leave);
-        if($request->input('multiple-days') == 'yes') {
+        if ($request->input('multiple-days') == 'yes') {
             $this->validate($request, [
                 'reason' => 'required',
                 'description' => 'required',
@@ -89,7 +107,7 @@ class LeaveController extends Controller
         $leave->reason = $request->reason;
         $leave->description = $request->description;
         $leave->half_day = $request->input('half-day');
-        if($request->input('multiple-days') == 'yes') {
+        if ($request->input('multiple-days') == 'yes') {
             [$start, $end] = explode(' - ', $request->input('date_range'));
             $start = Carbon::parse($start);
             $end = Carbon::parse($end);
@@ -105,7 +123,8 @@ class LeaveController extends Controller
         return redirect()->route('employee.leaves.index');
     }
 
-    public function destroy($leave_id) {
+    public function destroy($leave_id)
+    {
         $leave = Leave::findOrFail($leave_id);
         Gate::authorize('employee-leaves-access', $leave);
         $leave->delete();

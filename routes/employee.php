@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\Employee\NoticeController;
 
 
-Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(['auth','can:employee-access', 'employee'])->group(function () {
+Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(['auth', 'can:employee-access', 'employee'])->group(function () {
     Route::get('/', 'EmployeeController@index')->name('index');
     Route::get('/profile', 'EmployeeController@profile')->name('profile');
     Route::get('/profile-edit/{employee_id}', 'EmployeeController@profile_edit')->name('profile-edit');
@@ -46,4 +48,11 @@ Route::namespace('Employee')->prefix('employee')->name('employee.')->middleware(
     // Route::get('/self/salary_slip', 'SelfController@salary_slip')->name('self.salary_slip');
     // Route::get('/self/salary_slip_print', 'SelfController@salary_slip_print')->name('self.salary_slip_print');
     // Routes for Self //
+
+    //NOTICE BOARD
+    Route::get('dynamicflow-employee-evaluation-form', [NoticeController::class, 'employeeEvaluationForm'])->name('employeeEvaluationForm');
+    Route::get('dynamicflow-hr-policy', [NoticeController::class, 'hrPolicy'])->name('hrPolicy');
+    Route::get('notice', [NoticeController::class, 'notice'])->name('notice');
+
+    Route::get('markNotiAsRead/{notification}/{type}', [NotificationController::class, 'markNotiAsRead'])->name('markNotiAsRead');
 });

@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -47,18 +47,19 @@
                                     <label for="">Reason</label>
                                     <input type="text" name="reason" value="{{ old('reason') }}" class="form-control">
                                     @error('reason')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" class="form-control" >{{ old('description') }}</textarea>
+                                    <textarea name="description"
+                                        class="form-control">{{ old('description') }}</textarea>
                                     @error('description')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -79,9 +80,9 @@
                                     <label for="">Date Range: </label>
                                     <input type="text" name="date_range" id="date_range" class="form-control">
                                     @error('date_range')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group hide-input" id="date-group">
@@ -105,25 +106,26 @@
 
 @section('extra-js')
 
-<script>
-    $(document).ready(function() {
-        $('#date_range').daterangepicker({
-            "locale": {
-                "format": "DD-MM-YYYY",
-            }
-        });
-        $('#date').daterangepicker({
-            "singleDatePicker": true,
-            "locale": {
-                "format": "DD-MM-YYYY",
-            }
+    <script>
+        $(document).ready(function() {
+            $('#date_range').daterangepicker({
+                "locale": {
+                    "format": "DD-MM-YYYY",
+                }
+            });
+            $('#date').daterangepicker({
+                "singleDatePicker": true,
+                "locale": {
+                    "format": "DD-MM-YYYY",
+                }
+            });
+
         });
 
-    });
-    function showDate() {
-        $('#range-group').toggleClass('hide-input');
-        $('#date-group').toggleClass('hide-input');
-        $('#half-day').toggleClass('hide-input');
-    }
-</script>
+        function showDate() {
+            $('#range-group').toggleClass('hide-input');
+            $('#date-group').toggleClass('hide-input');
+            $('#half-day').toggleClass('hide-input');
+        }
+    </script>
 @endsection

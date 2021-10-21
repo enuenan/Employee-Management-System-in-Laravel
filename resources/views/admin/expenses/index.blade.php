@@ -85,12 +85,11 @@
                                         </td>
                                         <td>{{ $expense->description }}</td>
                                         <td>
-                                            <button 
-                                            class="btn btn-flat btn-info"
-                                            data-toggle="modal"
-                                            data-target="#deleteModalCenter{{ $index + 1 }}"
-                                            >
-                                            Change Status
+                                            <button class="btn btn-flat btn-info" data-toggle="modal" data-target="#changeStatus{{ $index + 1 }}">
+                                                Change Status
+                                            </button>
+                                            <button class="btn btn-flat btn-danger" data-toggle="modal" data-target="#deleteModalCenter{{ $index + 1 }}">
+                                                Change Status
                                             </button>
                                         </td>
                                     </tr>
@@ -99,7 +98,7 @@
                             </table>
                             @for ($i = 1; $i < $expenses->count()+1; $i++)
                                 <!-- Modal -->
-                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                <div class="modal fade" id="changeStatus{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="changeStatusTitle1{{ $i }}" aria-hidden="true">
                                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="card card-info">
@@ -126,6 +125,26 @@
                                                 </div>
                                                 <div class="card-footer text-center">
                                                     <button type="submit" class="btn flat btn-info">Update</button>
+                                                </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal -->
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="card card-info">
+                                                <div class="card-header">
+                                                    <h5 style="text-align: center !important">Delete Expense</h5>
+                                                </div>
+                                                 <div class="card-footer text-center">
+                                                    <button type="submit" class="btn flat btn-info" data-dismiss="modal">Cancel</button>
+                                                    <a href="{{ route('admin.expenses.delete', $expenses->get($i-1)->id) }}">
+                                                        <button type="submit" class="btn flat btn-danger">Delete</button>
+                                                    </a>
                                                 </div>
                                             </form>
                                             </div>

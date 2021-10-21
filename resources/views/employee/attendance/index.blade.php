@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -34,7 +34,8 @@
                 <div class="col-md-3 mx-auto">
                     <div class="card">
                         <div class="card-header">
-                                <h5 class="text-center text-primary" style="text-align: center !important">Search attendance using date range</h5>
+                            <h5 class="text-center text-primary" style="text-align: center !important">Search attendance
+                                using date range</h5>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -44,24 +45,23 @@
                                         <fieldset>
                                             <div class="form-group">
                                                 <label for="">Date Range</label>
-                                                <input type="text" name="date_range" placeholder="Start Date" class="form-control text-center"
-                                                id="date_range"
-                                                >
+                                                <input type="text" name="date_range" placeholder="Start Date"
+                                                    class="form-control text-center" id="date_range">
                                                 @error('date_range')
-                                                <div class="ml-2 text-danger">
-                                                    {{ $message }}
-                                                </div>
+                                                    <div class="ml-2 text-danger">
+                                                        {{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
                                         </fieldset>
-                                        
-                                            <input type="submit" name="" class="btn btn-primary" value="Submit">
-                                        </div>
-                                        
-                                    </form>
+
+                                        <input type="submit" name="" class="btn btn-primary" value="Submit">
                                 </div>
+
+                                </form>
                             </div>
-                            {{-- <div class="container">
+                        </div>
+                        {{-- <div class="container">
                                 <form action="{{ route('employee.attendance.index') }}" class="row" method="POST">
                                     @csrf
                                     <div class="col-sm-9 mb-2">
@@ -85,24 +85,24 @@
                                     
                                 </form>
                             </div> --}}
-                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg mx-auto">
-                    <div class="card card-info">
-                        <div class="card-header">
-                            <div class="card-title text-center">
-                                Attendances
-                                @if ($filter)
-                                    of a range
-                                @endif
-                            </div>
-                            
+        </div>
+        <div class="row">
+            <div class="col-lg mx-auto">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <div class="card-title text-center">
+                            Attendances
+                            @if ($filter)
+                                of a range
+                            @endif
                         </div>
-                        <div class="card-body">
-                            @if ($attendances->count())
+
+                    </div>
+                    <div class="card-body">
+                        @if ($attendances->count())
                             <table class="table table-bordered table-hover" id="dataTable">
                                 <thead>
                                     <tr>
@@ -116,68 +116,86 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($attendances as $index => $attendance)
-                                    <tr>
-                                        <td>{{ $index + 1 }}</td>
-                                        @if ($attendance->registered == 'yes')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-success">Present</span> </h5></td>
-                                        <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
-                                        <td>{{ $attendance->entry_location }}</td>
-                                        <td>{{ $attendance->updated_at->format('H:i:s a') }}</td>
-                                        <td>{{ $attendance->exit_location }}</td>
-                                        @elseif($attendance->registered == 'no')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-danger">Absent</span> </h5></td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        @elseif($attendance->registered == 'sun')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-info">Sunday</span> </h5></td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        @elseif($attendance->registered == 'leave')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-info">Leave</span> </h5></td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        @elseif($attendance->registered == 'holiday')
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-success">Holiday</span> </h5></td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        <td class="text-center">No records</td>
-                                        @else
-                                        <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
-                                        <td><h5 class="text-center"><span class="badge badge-pill badge-warning">Half Day</span> </h5></td>
-                                        <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
-                                        <td>{{ $attendance->entry_location }}</td>
-                                        <td>No entry</td>
-                                        <td>No entry</td>
-                                        @endif
-                                    </tr>
-                                @endforeach
+                                    @foreach ($attendances as $index => $attendance)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            @if ($attendance->registered == 'yes')
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-success">Present</span> </h5>
+                                                </td>
+                                                <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
+                                                <td>{{ $attendance->entry_location }}</td>
+                                                <td>{{ $attendance->updated_at->format('H:i:s a') }}</td>
+                                                <td>{{ $attendance->exit_location }}</td>
+                                            @elseif($attendance->registered == 'no')
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-danger">Absent</span> </h5>
+                                                </td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                            @elseif($attendance->registered == 'sun')
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-info">Sunday</span> </h5>
+                                                </td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                            @elseif($attendance->registered == 'leave')
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-info">Leave</span> </h5>
+                                                </td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                            @elseif($attendance->registered == 'holiday')
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-success">Holiday</span> </h5>
+                                                </td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                                <td class="text-center">No records</td>
+                                            @else
+                                                <td>{{ $attendance->created_at->format('d-m-Y') }}</td>
+                                                <td>
+                                                    <h5 class="text-center"><span
+                                                            class="badge badge-pill badge-warning">Half Day</span> </h5>
+                                                </td>
+                                                <td>{{ $attendance->created_at->format('H:i:s a') }}</td>
+                                                <td>{{ $attendance->entry_location }}</td>
+                                                <td>No entry</td>
+                                                <td>No entry</td>
+                                            @endif
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
-                            @else
+                        @else
                             <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">
                                 <h4>No Records Available</h4>
                             </div>
-                            @endif
-                            
-                        </div>
+                        @endif
+
                     </div>
-                    <!-- general form elements -->
-                    
                 </div>
+                <!-- general form elements -->
+
             </div>
+        </div>
         </div>
         <!-- /.container-fluid -->
     </section>
@@ -186,18 +204,18 @@
 @endsection
 @section('extra-js')
 
-<script>
-    $(document).ready(function() {
-        $('#dataTable').DataTable({
-            responsive:true,
-            autoWidth: false,
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable({
+                responsive: true,
+                autoWidth: false,
+            });
+            $('#date_range').daterangepicker({
+                "maxDate": new Date(),
+                "locale": {
+                    "format": "DD-MM-YYYY",
+                }
+            })
         });
-        $('#date_range').daterangepicker({
-            "maxDate": new Date(),
-            "locale": {
-                "format": "DD-MM-YYYY",
-            }
-        })
-    });
-</script>
+    </script>
 @endsection

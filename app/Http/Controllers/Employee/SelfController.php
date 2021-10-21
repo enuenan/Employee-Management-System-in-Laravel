@@ -10,9 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class SelfController extends Controller
 {
     public function holidays() {
-        $data = [
-            'holidays' => Holiday::all()
-        ];
+        // dd(auth()->user()->employee->department->name);
+        if((auth()->user()->employee->department->name) == "Data entry"){
+            $data = [
+                'holidays' => Holiday::where('department', 'dataEntry')->orWhere('department', 'common')->get()
+            ];
+        }else{
+            $data = [
+                'holidays' => Holiday::where('department', 'all')->orWhere('department', 'common')->get()
+            ];
+        }
 
         return view('employee.self.holidays')->with($data);
     }

@@ -27,20 +27,23 @@ class EmployeeMiddleware
             ->where('employee_id', $employee->id)
             ->get();
         $count = 0;
-        foreach ($thisMonthAttendances as $thisMonthAttendance){
+        foreach ($thisMonthAttendances as $thisMonthAttendance) {
             $checkInTime = strtotime('07:59:59');
-            $loginTime = strtotime(date("H:i:s",strtotime($thisMonthAttendance->created_at)));
+            $loginTime = strtotime(date("H:i:s", strtotime($thisMonthAttendance->created_at)));
             $diff = $checkInTime - $loginTime;
-            if($diff<0){
+            if ($diff < 0) {
                 $count++;
             }
         }
         // $count = 4;
-        if($count>5){
+        if ($count > 5) {
             \View::share('lateCount', $count);
-        }else{
+        } else {
             \View::share('lateCount', 0);
         }
+
+        $notifications = auth()->user()->unreadNotifications;
+        \View::share('notifications', $notifications);
 
         return $next($request);
     }

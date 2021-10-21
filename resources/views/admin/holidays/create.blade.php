@@ -72,6 +72,20 @@
                                     </div>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="">Department</label>
+                                        <select name="department" class="form-control" required>
+                                            <option hidden disabled selected value> -- select an option -- </option>
+                                            <option value="all"> All [Except Data Entry] </option>
+                                            <option value="dataEntry"> Data Entry </option>
+                                            <option value="common"> Common </option>
+                                        </select>
+                                        @error('department')
+                                        <div class="text-danger">
+                                            Please select a valid option
+                                        </div>
+                                        @enderror
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary" type="submit">Submit</button>

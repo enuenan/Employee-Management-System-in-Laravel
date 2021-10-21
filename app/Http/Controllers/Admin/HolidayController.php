@@ -19,9 +19,11 @@ class HolidayController extends Controller
     public function index()
     {
         $data = [
-            'holidays' => Holiday::all()
+            'holidays' => Holiday::where('department', 'all')->orWhere('department', 'common')->get(),
+            'dataEntryHolidays' => Holiday::where('department', 'dataEntry')->orWhere('department', 'common')->get()
         ];
 
+        // dd($data);
         return view('admin.holidays.index')->with($data);
     }
 
@@ -43,25 +45,36 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         if($request->input('multiple-days') == "no") {
             $this->validate($request, [
                 'name' => 'required',
+                'department' => 'required'
             ]);
-            Holiday::create([
-                'name' => $request->name,
-                'start_date' => Carbon::create($request->date)
-            ]);
-            
+            // dd("No");
+            // $save = Holiday::create([
+            //     'name' => $request->name,
+            //     'department' =>$request->department,
+            //     'start_date' => Carbon::create($request->date)
+            // ]);
+            $holiday = new Holiday();
+            $holiday -> name = $request->name;
+            $holiday -> department = $request->department;
+            $holiday -> start_date = Carbon::create($request->date);
+            $save = $holiday->save();
         } else {
+            dd("Yes");
             $this->validate($request, [
                 'name' => 'required',
-                'date_range' => new DateRange
+                'date_range' => new DateRange,
+                'department' => 'required'
             ]);
             [$start, $end] = explode(' - ', $request->date_range);
             Holiday::create([
                 'name' => $request->name,
                 'start_date' => $start,
-                'end_date' => $end
+                'end_date' => $end,
+                'department' =>$request->department
             ]);
         }
         $request->session()->flash('success', 'Holiday has been successfully added');

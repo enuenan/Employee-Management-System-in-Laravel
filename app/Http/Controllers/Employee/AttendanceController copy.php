@@ -32,8 +32,14 @@ class AttendanceController extends Controller
 
     public function location(Request $request)
     {
-        $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat=' . $request->lat . '&lon=' . $request->lon);
-        // $result = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lon . '&key=AIzaSyBmVVbDpAlazQOSKI_3dqWStntqQwtIUs8';
+        $ip = $request->ip();
+        $position = Location::get($ip);
+        $lat = $position->latitude;
+        $lon = $position->longitude;
+        // $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat=' . $request->lat . '&lon=' . $request->lon);
+        $response = Http::get('https://nominatim.openstreetmap.org/reverse?format=geojson&lat=' . $lat . '&lon=' . $lon);
+        // $result = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' . $request->lat . ',' . $request->lon . '&key=AIzaSyC_spXZlR87VF9qq073nAhFGZ-f3K6enqk';
+        // dd($result);
         // $file_contents = file_get_contents($result);
 
         // $json_decode = json_decode($file_contents);
@@ -46,22 +52,13 @@ class AttendanceController extends Controller
     }
 
     // Opens view for attendance register form
-    public function create(Request $request)
+    public function create()
     {
-        // $ip = $request->ip();
-        // dd($ip);
-        // $position = Location::get('103.218.24.227');
-        // dd($position);
-        // $lat = $position->latitude;
-        // $lon = $position->longitude;
-        // dd($lat, $lon);
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee,
             'attendance' => null,
-            'registered_attendance' => null,
-            // 'lat' => $lat,
-            // 'lon' => $lon,
+            'registered_attendance' => null
         ];
         $last_attendance = $employee->attendance->last();
         if ($last_attendance) {
@@ -71,7 +68,6 @@ class AttendanceController extends Controller
                     $data['registered_attendance'] = 'yes';
             }
         }
-        // dd($data);
         return view('employee.attendance.create')->with($data);
     }
 

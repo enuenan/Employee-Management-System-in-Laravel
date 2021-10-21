@@ -115,7 +115,7 @@
                                     <div class="modal-content">
                                         <div class="card card-danger">
                                             <div class="card-header">
-                                                <h5 style="text-align: center !important">Are you sure want to delete?
+                                                <h5 style="text-align: center !important">Are you sure want to change the password?
                                                 </h5>
                                             </div>
                                             <div class="card-body text-center d-flex" style="justify-content: center">

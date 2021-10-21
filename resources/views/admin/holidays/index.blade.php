@@ -30,13 +30,13 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            @include('messages.alerts')
             <div class="row">
-                <div class="col-md-6 mx-auto">
+                <div class="col-md-6">
                     <!-- general form elements -->
-                    @include('messages.alerts')
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">List of Holidays</h3>
+                            <h3 class="card-title">List of all employee Holidays</h3>
                         </div>
                         <div class="card-body">
                             @if ($holidays->count())
@@ -116,6 +116,91 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">List of Data Entry Holidays</h3>
+                        </div>
+                        <div class="card-body">
+                            @if ($dataEntryHolidays->count())
+                            <table class="table table-hover" id="dataTable2">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Month</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th class="none">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataEntryHolidays as $index => $dataEntryHoliday)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $dataEntryHoliday->name }}</td>
+                                        <td>{{ $dataEntryHoliday->start_date->format('F') }}</td>
+                                        <td>{{ $dataEntryHoliday->start_date->format('d')}}</td>
+                                        @if($dataEntryHoliday->end_date) 
+                                        <td>{{ $dataEntryHoliday->end_date->format('d') }}</td>
+                                        @else
+                                        <td>Single Day</td>
+                                        @endif
+                                        <td>
+                                            <a href="{{ route('admin.holidays.edit', $dataEntryHoliday->id) }}" class="btn btn-flat btn-warning">Edit</a>
+                                            <button 
+                                            class="btn btn-flat btn-danger"
+                                            data-toggle="modal"
+                                            data-target="#deleteModalCenter{{ $index+1 }}"
+                                            >
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @for ($i = 1; $i < $dataEntryHolidays->count()+1; $i++)
+                                <!-- Modal -->
+                                <div class="modal fade" id="deleteModalCenter{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalCenterTitle1{{ $i }}" aria-hidden="true">
+                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="card card-danger">
+                                                <div class="card-header">
+                                                    <h5 style="text-align: center !important">Are you sure want to delete?</h5>
+                                                </div>
+                                                <div class="card-body text-center d-flex" style="justify-content: center">
+                                                    
+                                                    <button type="button" class="btn flat btn-secondary" data-dismiss="modal">No</button>
+                                                    
+                                                    <form 
+                                                    action="{{ route('admin.holidays.delete', $dataEntryHolidays->get($i-1)->id) }}"
+                                                    method="POST"
+                                                    >
+                                                    @csrf
+                                                    @method('DELETE')
+                                                        <button type="submit" class="btn flat btn-danger ml-1">Yes</button>
+                                                    </form>
+                                                </div>
+                                                <div class="card-footer text-center">
+                                                    <small>This action is irreversable</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.modal -->
+                            @endfor
+                            @else
+                            <div class="alert alert-info text-center" style="width:50%; margin: 0 auto">
+                                <h4>No records available</h4>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /.container-fluid -->
@@ -129,6 +214,10 @@
 <script>
 $(document).ready(function(){
     $('#dataTable').DataTable({
+        responsive:true,
+        autoWidth: false,
+    });
+    $('#dataTable2').DataTable({
         responsive:true,
         autoWidth: false,
     });
