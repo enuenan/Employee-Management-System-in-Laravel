@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -40,47 +40,36 @@
                             </h3>
                         </div>
                         @include('messages.alerts')
-                        <form 
-                        action="{{ route('employee.expenses.store', $employee->id) }}" 
-                        method="POST" 
-                        enctype="multipart/form-data"
-                        >
+                        <form action="{{ route('employee.expenses.store', $employee->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Reason</label>
                                     <input type="text" name="reason" value="{{ old('reason') }}" class="form-control">
                                     @error('reason')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                                    <textarea name="description"
+                                        class="form-control">{{ old('description') }}</textarea>
                                     @error('description')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Amount</label>
-                                    <input type="text" name="amount" value="{{ old('amount') }}" class="form-control">
-                                    @error('amount')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Receipt Image</label>
-                                    <input type="file" name="receipt" class="form-control-file">
-                                    @error('receipt')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                    <label for="">Image</label>
+                                    <input type="file" name="file" class="form-control-file">
+                                    @error('file')
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                             </div>
@@ -100,7 +89,7 @@
 
 @section('extra-js')
 
-<script>
-    
-</script>
+    <script>
+
+    </script>
 @endsection

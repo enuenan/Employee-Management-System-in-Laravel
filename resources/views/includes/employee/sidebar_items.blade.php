@@ -77,6 +77,7 @@
     </a>
 </li>
 
+{{-- Requisition --}}
 <li
     class="nav-item has-treeview {{ request()->is('employee/expenses/claim-expense') ? 'menu-open' : '' }}
                                  {{ request()->is('employee/expenses/list-expenses') ? 'menu-open' : '' }}
@@ -87,7 +88,7 @@
             ">
         <i class="nav-icon fa fa-calendar-minus-o"></i>
         <p>
-            Expenses
+            Requisition
             <i class="fas fa-angle-left right"></i>
             {{-- <span class="badge badge-info right">2</span> --}}
         </p>
@@ -97,14 +98,14 @@
             <a href="{{ route('employee.expenses.create') }}"
                 class="nav-link {{ request()->is('employee/expenses/claim-expense') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Claim Expense</p>
+                <p>Claim Requisition</p>
             </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('employee.expenses.index') }}"
                 class="nav-link {{ request()->is('employee/expenses/list-expenses') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>List of Expenses</p>
+                <p>List of Requisition</p>
             </a>
         </li>
     </ul>

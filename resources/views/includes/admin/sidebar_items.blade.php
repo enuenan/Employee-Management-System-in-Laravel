@@ -80,7 +80,7 @@
             <a href="{{ route('admin.expenses.index') }}"
                 class="nav-link {{ request()->is('admin/expenses/list-expenses') ? 'active' : '' }}">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Expenses</p>
+                <p>Requisition</p>
             </a>
         </li>
         <li class="nav-item">

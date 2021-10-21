@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ExpenseController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         $employee = Auth::user()->employee;
         $data = [
             'employee' => $employee,
@@ -21,56 +22,49 @@ class ExpenseController extends Controller
         return view('employee.expenses.index')->with($data);
     }
 
-    public function create () {
+    public function create()
+    {
         $data = [
             'employee' => Auth::user()->employee
         ];
         return view('employee.expenses.create')->with($data);
     }
 
-    public function store(Request $request, $employee_id) {
+    public function store(Request $request, $employee_id)
+    {
         $data = [
             'employee' => Auth::user()->employee
         ];
         $this->validate($request, [
             'reason' => 'required',
             'description' => 'required',
-            'amount' => 'required | numeric',
-            'receipt' => 'image | nullable'
+            'file' => 'image|nullable'
         ]);
 
-        if ($request->hasFile('receipt')) {
-            // GET FILENAME
-            $filename_ext = $request->file('receipt')->getClientOriginalName();
-            // GET FILENAME WITHOUT EXTENSION
-            $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
-            // GET EXTENSION
-            $ext = $request->file('receipt')->getClientOriginalExtension();
-            //FILNAME TO STORE
-            $filename_store = $filename.'_'.time().'.'.$ext;
-            // UPLOAD IMAGE
-            $path = $request->file('receipt')->storeAs('public/receipts', $filename_store);
+        if ($request->hasFile('file')) {
+            $filename_store = $request->image->store('public/requisition');
         } else {
-        $filename_store = null;
+            $filename_store = null;
         }
         Expense::create([
             'employee_id' => $employee_id,
             'reason' => $request->input('reason'),
             'description' => $request->input('description'),
-            'amount' => $request->input('amount'),
-            'receipt' => $filename_store
+            'file' => $filename_store
         ]);
-        $request->session()->flash('success', 'Your expense claim has been successfully applied, wait for approval.');
+        $request->session()->flash('success', 'Your Requisition has been successfully applied, wait for approval.');
         return redirect()->route('employee.expenses.create')->with($data);
     }
 
-    public function edit($expense_id) {
+    public function edit($expense_id)
+    {
         $expense = Expense::findOrFail($expense_id);
         Gate::authorize('employee-expenses-access', $expense);
         return view('employee.expenses.edit')->with('expense', $expense);
     }
 
-    public function update(Request $request, $expense_id) {
+    public function update(Request $request, $expense_id)
+    {
         $expense = Expense::findOrFail($expense_id);
         Gate::authorize('employee-expenses-access', $expense);
         $data = [
@@ -79,40 +73,26 @@ class ExpenseController extends Controller
         $this->validate($request, [
             'reason' => 'required',
             'description' => 'required',
-            'amount' => 'required | numeric',
-            'receipt' => 'image | nullable'
+            'file' => 'image | nullable'
         ]);
         $expense->reason = $request->reason;
         $expense->description = $request->description;
-        $expense->amount = $request->amount;
-        if (($request->new_image == 'yes') && $request->hasFile('receipt')) {
-            // Deleting the old image
-            $old_filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'receipts'.DIRECTORY_SEPARATOR. $expense->receipt);
-            if(file_exists($old_filepath)) {
-                unlink($old_filepath);
-            }
-            // GET FILENAME
-            $filename_ext = $request->file('receipt')->getClientOriginalName();
-            // GET FILENAME WITHOUT EXTENSION
-            $filename = pathinfo($filename_ext, PATHINFO_FILENAME);
-            // GET EXTENSION
-            $ext = $request->file('receipt')->getClientOriginalExtension();
-            //FILNAME TO STORE
-            $filename_store = $filename.'_'.time().'.'.$ext;
-            // UPLOAD IMAGE
-            $path = $request->file('receipt')->storeAs('public'.DIRECTORY_SEPARATOR.'receipts', $filename_store);
-            // add new file name
-            $expense->receipt = $filename_store;
+        if ($request->hasFile('file')) {
+            Storage::delete($expense->file);
+            $expense->file = $request->file->store('public/requisition');
+        } else {
+            $expense->file = null;
         }
         $expense->save();
         $request->session()->flash('success', 'Your expense has been successfully updated!');
         return redirect()->route('employee.expenses.index');
     }
 
-    public function destroy($expense_id) {
+    public function destroy($expense_id)
+    {
         $expense = Expense::findOrFail($expense_id);
         Gate::authorize('employee-expenses-access', $expense);
-        $filepath = public_path(DIRECTORY_SEPARATOR.'storage'.DIRECTORY_SEPARATOR.'receipts'.DIRECTORY_SEPARATOR. $expense->receipt);
+        $filepath = public_path(DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'receipts' . DIRECTORY_SEPARATOR . $expense->receipt);
         if (file_exists($filepath)) {
             File::delete($filepath);
         }

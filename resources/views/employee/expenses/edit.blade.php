@@ -1,4 +1,4 @@
-@extends('layouts.app')        
+@extends('layouts.app')
 
 @section('content')
     <!-- Content Header (Page header) -->
@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Edit Expense Claim</h1>
+                    <h1 class="m-0 text-dark">Edit Requisition Claim</h1>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-6">
@@ -15,7 +15,7 @@
                             <a href="{{ route('employee.index') }}">Employee Dashboard</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Edit Expense Claim
+                            Edit Requisition Claim
                         </li>
                     </ol>
                 </div>
@@ -36,43 +36,33 @@
                     <div class="card card-info">
                         <div class="card-header">
                             <h3 class="card-title">
-                                Edit Expense Claim
+                                Edit Requisition Claim
                             </h3>
                         </div>
                         @include('messages.alerts')
-                        <form 
-                        action="{{ route('employee.expenses.update', $expense->id) }}" 
-                        method="POST" 
-                        enctype="multipart/form-data"
-                        >
+                        <form action="{{ route('employee.expenses.update', $expense->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="">Reason</label>
-                                    <input type="text" name="reason" value="{{ $expense->reason }}" class="form-control">
+                                    <input type="text" name="reason" value="{{ $expense->reason }}"
+                                        class="form-control">
                                     @error('reason')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Description</label>
-                                    <textarea name="description" class="form-control">{{ $expense->description }}</textarea>
+                                    <textarea name="description"
+                                        class="form-control">{{ $expense->description }}</textarea>
                                     @error('description')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="">Amount</label>
-                                    <input type="text" name="amount" value="{{ $expense->amount }}" class="form-control">
-                                    @error('amount')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
@@ -84,11 +74,11 @@
                                 </div>
                                 <div class="form-group hide-input" id="file">
                                     <label for="">Receipt Image</label>
-                                    <input type="file" name="receipt" class="form-control-file">
+                                    <input type="file" name="file" class="form-control-file">
                                     @error('receipt')
-                                    <div class="text-danger">
-                                        {{ $message }}
-                                    </div>
+                                        <div class="text-danger">
+                                            {{ $message }}
+                                        </div>
                                     @enderror
                                 </div>
                             </div>
@@ -108,9 +98,9 @@
 
 @section('extra-js')
 
-<script>
-    function showInput() {
-        $('#file').toggleClass('hide-input')
-    }
-</script>
+    <script>
+        function showInput() {
+            $('#file').toggleClass('hide-input')
+        }
+    </script>
 @endsection
