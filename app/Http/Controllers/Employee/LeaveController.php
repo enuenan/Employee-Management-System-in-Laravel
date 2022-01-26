@@ -10,9 +10,10 @@ use App\Rules\DateRange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Notifications\AdminLeavesNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\AdminLeavesNotification;
 
 class LeaveController extends Controller
 {

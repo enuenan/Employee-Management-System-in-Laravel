@@ -12,6 +12,7 @@ class AdminLeavesNotification extends Notification
     use Queueable;
 
     public $leaves;
+    public $fullname;
 
     /**
      * Create a new notification instance.
@@ -20,8 +21,9 @@ class AdminLeavesNotification extends Notification
      */
     public function __construct($leaves)
     {
+        // dd($leaves->employee);
+        $this->fullname = $leaves->employee->first_name . " " . $leaves->employee->last_name;
         $this->leaves = $leaves;
-        // dd($this->leaves);
     }
 
     /**
@@ -32,7 +34,7 @@ class AdminLeavesNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -43,10 +45,10 @@ class AdminLeavesNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        // return (new MailMessage)
-        //     ->line('The introduction to the notification.')
-        //     ->action('Notification Action', url('/'))
-        //     ->line('Thank you for using our application!');
+        return (new MailMessage)
+            ->line('You have a new leave notification')
+            ->line($this->fullname . " wants leave because of " . $this->leaves->reason)
+            ->action('Notification Action', url('/'));
     }
 
     /**

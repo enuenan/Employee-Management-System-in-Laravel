@@ -31,10 +31,11 @@
 
                     <div class="input-group mb-3">
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                            placeholder="Password" name="password" required autocomplete="current-password" />
+                            placeholder="Password" name="password" id="password" required autocomplete="current-password" />
                         <div class="input-group-append">
                             <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+                                <span class="fas fa-eye" id="show"></span>
+                                <span class="fas fa-eye-slash d-none" id="hide"></span>
                             </div>
                         </div>
                         @error('password')
@@ -72,4 +73,18 @@
         </div>
     </div>
     <!-- /.login-box -->
+
+    <script script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#show").click(function() {
+            $("#show").addClass('d-none');
+            $("#hide").removeClass('d-none');
+            $("#password").attr("type", "text");
+        });
+        $("#hide").click(function() {
+            $("#show").removeClass('d-none');
+            $("#hide").addClass('d-none');
+            $("#password").attr("type", "password");
+        });
+    </script>
 @endsection
