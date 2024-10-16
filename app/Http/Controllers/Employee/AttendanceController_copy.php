@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Http;
 use Stevebauman\Location\Facades\Location;
 // use phpDocumentor\Reflection\Location;
 
-class AttendanceController extends Controller
+class AttendanceController_copy extends Controller
 {
     public function getIp()
     {
